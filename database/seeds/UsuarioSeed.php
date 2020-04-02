@@ -13,9 +13,10 @@ class UsuarioSeed extends Seeder
     public function run() {
         Usuario::create([
             'nome'  => 'Admin',
-            'email' => 'admin@teste.com',
             'senha' => md5('123456'),
-            'admin' => true
+            'admin' => true,
+            'profissao_id' => 1,
+            'nivel_acesso' => 1
         ]);
     }
 }

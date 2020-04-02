@@ -20,6 +20,8 @@
                         <td>ID</td>
                         <td>Nome</td>
                         <td>Admin</td>
+                        <td>Profissão</td>
+                        <td>Nível acesso</td>
                         <td>Opções</td>
                     </tr>
                 </thead>
@@ -43,6 +45,20 @@
                             <span class="role admin">admin</span>
                             @else
                             <span class="role user">Comum</span>
+                            @endif
+                        </td>
+                        <!-- PROFISSÃO -->
+                        <td>
+                            <p>{{$usuario->profissao->nome}}</p>
+                        </td>
+                        <!-- NIVEL -->
+                        <td>
+                            @if($usuario->nivel_acesso == 1)
+                            <span class="role admin">Professor</span>
+                            @elseif($usuario->nivel_acesso == 2)
+                            <span class="role user">Monitor</span>
+                            @else
+                            <span class="role user">Aluno</span>
                             @endif
                         </td>
                         <!-- OPÇÕES -->   

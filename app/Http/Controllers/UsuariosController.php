@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profissao;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 
@@ -14,7 +15,7 @@ class UsuariosController extends Controller {
 
     /** Lista o usuários */
     public function index() {
-        $this->dados['usuarios'] = Usuario::paginate(10);
+        $this->dados['usuarios'] = Usuario::with('Profissao')->paginate(10);
         return view('usuarios.listar', $this->dados);
     }
 
@@ -23,6 +24,7 @@ class UsuariosController extends Controller {
      */
     public function novo() {
         $this->dados['usuario'] = new Usuario;
+        $this->dados['profissoes'] = Profissao::all();
         return view('usuarios.novo', $this->dados);
     }
 
@@ -33,7 +35,6 @@ class UsuariosController extends Controller {
         $request->validate([
             'nome'  => 'required',
             'senha'  => 'required|min:6',
-            //'email' => 'required|email|unique:usuarios,email',
         ]);
         $dados = $request->all();
         $dados['senha'] = md5($dados['senha']);
@@ -48,6 +49,8 @@ class UsuariosController extends Controller {
      */
     public function edicao(int $id) {
         $this->dados['usuario'] = Usuario::findOrFail($id);
+        $this->dados['profissoes'] = Profissao::all();
+
         return view('usuarios.edicao', $this->dados);
     }
     
@@ -57,7 +60,6 @@ class UsuariosController extends Controller {
     public function editar(Request $request, int $id) {
         $request->validate([
             'nome'  => 'required',
-            //'email' => 'required|email|unique:usuarios,email,'.$id,
         ]);
 
         $dados = $request->except(['_token']);

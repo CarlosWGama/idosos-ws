@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +11,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::get('/', function() { return redirect()->route('login'); });
 
@@ -29,9 +31,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/excluir/{id?}', 'UsuariosController@excluir')->name('usuarios.excluir');
     });
 
-    Route::group(['prefix' => 'tarefas'], function () {
-        Route::get('/', 'TarefasController@index')->name('tarefas.listar');
-        Route::get('/excluir/{id?}', 'TarefasController@excluir')->name('tarefas.excluir');
+    Route::group(['prefix' => 'casa-do-pobre'], function () {
+        Route::get('/historico', 'TarefasController@index')->name('casa.historico');
     });
 
 });

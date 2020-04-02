@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CriaTabelaTarefas extends Migration
+class CreateQuemSomosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CriaTabelaTarefas extends Migration
      */
     public function up()
     {
-        Schema::create('tarefas', function (Blueprint $table) {
+        Schema::create('quem_somos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('descricao');
-            $table->date('data');
-            $table->string('imagem')->nullable();
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
-            $table->softDeletes();
+            $table->text('sobre');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CriaTabelaTarefas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tarefas');
+        Schema::dropIfExists('quem_somos');
     }
 }

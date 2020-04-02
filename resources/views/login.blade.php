@@ -40,7 +40,8 @@
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                <img src="{{asset('images/icon/cwg.png')}}" alt="CoolAdmin">
+                                <img src="{{asset('images/icon/logo.png')}}" alt="CoolAdmin">
+                                Casa do Pobre
                             </a>
                         </div>
                         <div class="login-form">
@@ -53,8 +54,8 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <label>Código</label>
+                                    <input class="au-input au-input--full" type="number" name="id" placeholder="Código de Acesso">
                                 </div>
                                 <div class="form-group">
                                     <label>Senha</label>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CriaTabelaUsuarios extends Migration
+class CreateProfissaosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CriaTabelaUsuarios extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('profissoes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->string('email');
-            $table->string('senha');
-            $table->boolean('admin')->default(false);
+            $table->boolean('exibir')->default(true); //Exibe no aplicativo
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ class CriaTabelaUsuarios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('profissoes');
     }
 }

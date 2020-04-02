@@ -14,10 +14,10 @@
     <link href="{{asset('others/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('others/font-awesome-5/css/fontawesome-all.min.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('others/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
-
+    
     <!-- Bootstrap CSS-->
     <link href="{{asset('others/bootstrap-4.1/bootstrap.min.css')}}" rel="stylesheet" media="all">
-
+    
     <!-- others CSS-->
     <link href="{{asset('others/animsition/animsition.min.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('others/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css')}}" rel="stylesheet" media="all">
@@ -26,9 +26,10 @@
     <link href="{{asset('others/slick/slick.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('others/select2/select2.min.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('others/perfect-scrollbar/perfect-scrollbar.css')}}" rel="stylesheet" media="all">
-
+    
     <!-- Main CSS-->
     <link href="{{asset('css/theme.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('css/custom.css')}}" rel="stylesheet" media="all">
 
 </head>
 
@@ -73,10 +74,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <!-- TAREFAS -->
+                        <!-- CASA DO POBRE -->
                         <li>
-                            <a href="{{route('tarefas.listar')}}">
-                                <i class="fas fa-check"></i>Tarefas</a>
+                            <a href="{{route('casa.historico')}}"><i class="fas fa-home"></i>Histórico</a>
+                            <a href="#"><i class="fas fa-camera"></i>Fotos</a>
+                            <a href="#"><i class="fas fa-phone"></i>Contatos</a>
                         </li>
                     </ul>
                 </div>
@@ -111,9 +113,12 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="@if(isset($menu) && $menu == 'tarefas') active @endif">
-                            <a href="{{route('tarefas.listar')}}">
-                                <i class="fas fa-check"></i>Tarefas</a>
+                        <li class="@if(isset($menu) && $menu == 'casa-do-pobre') active @endif">
+                            <a class="js-arrow" href="#"><i class="fas fa-home"></i>Casa do Pobre</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li><a href="{{route('casa.historico')}}">Histórico</a></li>
+                                <li><a href="#">Fotos</a></li>
+                                <li><a href="#">Contatos</a></li>
                         </li>
                     </ul>
                 </nav>
@@ -143,7 +148,7 @@
                                                     <h5 class="name">
                                                         <a href="#">{{session('usuario')->nome}}</a>
                                                     </h5>
-                                                    <span class="email">{{session('usuario')->email}}</span>
+                                                    <span class="email">Código: {{session('usuario')->id}}</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">

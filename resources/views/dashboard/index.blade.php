@@ -37,11 +37,11 @@
             <div class="overview__inner">
                 <div class="overview-box clearfix">
                     <div class="icon">
-                        <i class="zmdi zmdi-calendar-note"></i>
+                        <i class="zmdi zmdi-male-female"></i>
                     </div>
                     <div class="text">
-                        <h2>{{$tarefasCadastradas}}</h2>
-                        <span>Total de Tarefas</span>
+                        <h2>{{$pacientesCadastrados}}</h2>
+                        <span>Total de Pacientes</span>
                     </div>
                 </div>
                 <div class="overview-chart">

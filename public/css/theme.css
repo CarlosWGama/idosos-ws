@@ -338,6 +338,16 @@ section {
     margin-bottom: 30px;
 }
 
+.login-logo a {
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+}
+
+.login-logo img {
+    height: 150px;
+}
+
 .login-checkbox {
     display: -webkit-box;
     display: -webkit-flex;
