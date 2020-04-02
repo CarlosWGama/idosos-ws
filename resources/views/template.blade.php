@@ -90,7 +90,7 @@
                         <li>
                             <a href="{{route('casa.historico')}}"><i class="fas fa-home"></i>Histórico</a>
                             <a href="{{route('casa.fotos')}}"><i class="fas fa-camera"></i>Fotos</a>
-                            <a href="#"><i class="fas fa-phone"></i>Contatos</a>
+                            <a href="{{route('contatos.listar')}}"><i class="fas fa-phone"></i>Contatos</a>
                         </li>
                     </ul>
                 </div>
@@ -130,7 +130,7 @@
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li><a href="{{route('casa.historico')}}">Histórico</a></li>
                                 <li><a href="{{route('casa.fotos')}}">Fotos</a></li>
-                                <li><a href="#">Contatos</a></li>
+                                <li><a href="{{route('contatos.listar')}}">Contatos</a></li>
                         </li>
                     </ul>
                 </nav>

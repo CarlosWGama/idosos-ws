@@ -40,6 +40,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/fotos', 'FotosController@index')->name('casa.fotos');
         Route::post('/fotos', 'FotosController@cadastrar')->name('casa.fotos.cadastrar');
         Route::get('/fotos/excluir/{id?}', 'FotosController@excluir')->name('casa.fotos.excluir');
+
+        //Contatos
+        Route::group(['prefix' => 'contatos'], function () {
+            Route::get('/', 'ContatosController@index')->name('contatos.listar');
+            Route::get('/novo', 'ContatosController@novo')->name('contatos.novo');
+            Route::post('/cadastrar', 'ContatosController@cadastrar')->name('contatos.cadastrar');
+            Route::get('/edicao/{id}', 'ContatosController@edicao')->name('contatos.edicao');
+            Route::post('/editar/{id}', 'ContatosController@editar')->name('contatos.editar');
+            Route::get('/excluir/{id?}', 'ContatosController@excluir')->name('contatos.excluir');
+        });
     });
 
 });

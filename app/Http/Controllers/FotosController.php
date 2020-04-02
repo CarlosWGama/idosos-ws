@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Foto;
 use Illuminate\Http\Request;
 
-class FotosController extends Controller
-{
+class FotosController extends Controller {
+
+    private $dados = ['menu' => 'casa-do-pobre'];
+
    /**
     * Abre a tela com a listagem de Fotos e permitir cadastrar novas fotos
     */

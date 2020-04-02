@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class HistoricoController extends Controller {
 
+    private $dados = ['menu' => 'casa-do-pobre'];
+
      /** Abre de Historico  */
      public function index() {
         $this->dados['historico'] = QuemSomos::first();
