@@ -15,7 +15,7 @@ class CreateQuemSomosTable extends Migration
     {
         Schema::create('quem_somos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('sobre');
+            $table->text('descricao');
             $table->timestamps();
         });
     }

@@ -32,7 +32,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     });
 
     Route::group(['prefix' => 'casa-do-pobre'], function () {
-        Route::get('/historico', 'TarefasController@index')->name('casa.historico');
+        //Histórico
+        Route::get('/historico', 'HistoricoController@index')->name('casa.historico');
+        Route::post('/historico/editar', 'HistoricoController@editar')->name('casa.historico.editar');
     });
 
 });

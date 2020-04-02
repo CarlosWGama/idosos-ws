@@ -221,6 +221,16 @@
 
     @stack('javascript')
 
+    @if(isset($tinymce))
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+        selector: 'textarea.tinymce',  // change this value according to your HTML
+        menubar: false,
+      });
+    </script>
+    @endif
+
 </body>
 
 </html>
