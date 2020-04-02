@@ -35,6 +35,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         //Histórico
         Route::get('/historico', 'HistoricoController@index')->name('casa.historico');
         Route::post('/historico/editar', 'HistoricoController@editar')->name('casa.historico.editar');
+        
+        //Fotos
+        Route::get('/fotos', 'FotosController@index')->name('casa.fotos');
+        Route::post('/fotos', 'FotosController@cadastrar')->name('casa.fotos.cadastrar');
+        Route::get('/fotos/excluir/{id?}', 'FotosController@excluir')->name('casa.fotos.excluir');
     });
 
 });

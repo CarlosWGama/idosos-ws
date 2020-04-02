@@ -31,6 +31,18 @@
     <link href="{{asset('css/theme.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('css/custom.css')}}" rel="stylesheet" media="all">
 
+    <!-- Jquery JS-->
+    <script src="{{asset('others/jquery-3.2.1.min.js')}}"></script>
+
+    <style>
+        @stack('css')
+    </style>
+    
+    @if(isset($fileupload))
+    <link rel="stylesheet" href="{{asset('others/fileupload/fileupload.css')}}">
+    <script src="{{asset('others/fileupload/fileupload.js')}}"></script>
+    @endif
+
 </head>
 
 <body class="animsition">
@@ -77,7 +89,7 @@
                         <!-- CASA DO POBRE -->
                         <li>
                             <a href="{{route('casa.historico')}}"><i class="fas fa-home"></i>Histórico</a>
-                            <a href="#"><i class="fas fa-camera"></i>Fotos</a>
+                            <a href="{{route('casa.fotos')}}"><i class="fas fa-camera"></i>Fotos</a>
                             <a href="#"><i class="fas fa-phone"></i>Contatos</a>
                         </li>
                     </ul>
@@ -117,7 +129,7 @@
                             <a class="js-arrow" href="#"><i class="fas fa-home"></i>Casa do Pobre</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li><a href="{{route('casa.historico')}}">Histórico</a></li>
-                                <li><a href="#">Fotos</a></li>
+                                <li><a href="{{route('casa.fotos')}}">Fotos</a></li>
                                 <li><a href="#">Contatos</a></li>
                         </li>
                     </ul>
@@ -195,8 +207,7 @@
 
     </div>
 
-    <!-- Jquery JS-->
-    <script src="{{asset('others/jquery-3.2.1.min.js')}}"></script>
+  
     <!-- Bootstrap JS-->
     <script src="{{asset('others/bootstrap-4.1/popper.min.js')}}"></script>
     <script src="{{asset('others/bootstrap-4.1/bootstrap.min.js')}}"></script>

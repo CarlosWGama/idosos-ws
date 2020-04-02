@@ -20,7 +20,7 @@
         
         <div class="card-footer">
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fa fa-dot-circle-o"></i> Cadastrar
+                <i class="fa fa-save"></i> Cadastrar
             </button>
         </div>
     </form>
