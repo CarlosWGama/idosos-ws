@@ -26,6 +26,13 @@ Route::group(['prefix' => 'casa'], function () {
 });
 
 Route::group(['middleware' => ['jwt']], function () {   
+
+    
+    Route::group(['prefix' => 'casa'], function () {
+        Route::post('agenda', 'Api\CasaDoPobreController@cadastrarEvento');
+        Route::delete('agenda/{id}', 'Api\CasaDoPobreController@excluirEvento');
+    });
+
     Route::group(['prefix' => 'usuarios'], function () {
         Route::post('/alunos', 'Api\UsuariosController@cadastrarAluno');
         Route::get('/alunos', 'Api\UsuariosController@buscarAlunos');
