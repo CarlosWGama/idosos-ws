@@ -17,4 +17,16 @@ class ApiController extends Controller {
         $dados = JWT::decode($request->header('Authorization'), config('jwt.senha'), ['HS256']);
         return $dados->id;
     }
+
+    
+    /** 
+     * Recebe a imagem na base64
+     * @param $uriBase64 | Imagem com toda URI data:image/png;base64,
+     * @param $nomeArquivo | Qual nome do arquivo para ser salvo
+     */
+    protected function salvarImagem(string $uriBase64, string $nomeArquivo, string $pasta) {
+        $vetor = explode(',', $uriBase64);
+        $imagemBase64 = end($vetor);
+        file_put_contents(storage_path("app/public/$pasta/$nomeArquivo"), base64_decode($imagemBase64));
+    }
 }

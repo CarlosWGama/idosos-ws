@@ -12,6 +12,9 @@ class Foto extends Model
     //Não protege nenhum campo
     protected $guarded = [];
 
+    //Carrega automaticamente atributos customizados
+    protected $appends = ['url'];
+
     //Esconde os campos
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 

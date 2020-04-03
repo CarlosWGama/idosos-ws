@@ -16,12 +16,12 @@ class UsuariosController extends ApiController {
     
     /** Loga o usuário */
     public function logar(Request $request) {
-        $usuario = Usuario::where('email', $request->email)
+        $usuario = Usuario::where('id', $request->codigo)
                             ->where('senha', md5($request->senha))
                             ->firstOrFail(); //Senão achar retorna 404
 
         $jwt = JWT::encode(['id' => $usuario->id], config('jwt.senha'));
-        return response()->json(['jwt' => $jwt], 200);
+        return response()->json(['jwt' => $jwt, 'usuario' => $usuario], 200);
     }
 
 

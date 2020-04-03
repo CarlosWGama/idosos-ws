@@ -20,6 +20,7 @@
                         <td>ID</td>
                         <td>Nome</td>
                         <td>Admin</td>
+                        <td>Equipe Profissional</td>
                         <td>Profissão</td>
                         <td>Nível acesso</td>
                         <td>Opções</td>
@@ -45,6 +46,14 @@
                             <span class="role admin">admin</span>
                             @else
                             <span class="role user">Comum</span>
+                            @endif
+                        </td>
+                        <!-- EQUIPE PROFISSIONAL -->
+                        <td>
+                            @if($usuario->exibir)
+                            <span class="role user">Sim</span>
+                            @else
+                            <span class="role admin">Não</span>
                             @endif
                         </td>
                         <!-- PROFISSÃO -->

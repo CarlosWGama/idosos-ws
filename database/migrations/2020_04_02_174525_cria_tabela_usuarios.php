@@ -18,6 +18,7 @@ class CriaTabelaUsuarios extends Migration
             $table->string('nome');
             $table->string('senha');
             $table->boolean('admin')->default(false);
+            $table->boolean('exibir')->default(false); //Se deve ser exibido no aplicativo
             $table->unsignedBigInteger('profissao_id')->nullable();
             $table->foreign('profissao_id')->references('id')->on('profissoes');
             $table->integer('nivel_acesso')->default(1); //1Professor (Pode tudo no paciente e cadastrar equipe)|2Moderador(Acesso total ao paciente)|3Aluno(Acesso limitado ao paciente) 

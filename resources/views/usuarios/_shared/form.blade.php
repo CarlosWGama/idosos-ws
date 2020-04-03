@@ -33,6 +33,16 @@
 
 <!-- ADMINISTRADOR -->
 <div class="form-group">
+    <label class=" form-control-label">Exibir em Equipe Profissional</label>
+    <select name="exibir" id="select" class="form-control">
+        <option value="0">Não</option>
+        <option value="1" @if(old('exibir', $usuario->exibir)) selected @endif>Sim</option>
+    </select>
+    <p class="legenda-form">Exibe o usuário no menu Equipe Profissional no aplicativo *</p>
+</div>
+
+<!-- ADMINISTRADOR -->
+<div class="form-group">
     <label class=" form-control-label">Administrador</label>
     <select name="admin" id="select" class="form-control">
         <option value="0">Não</option>

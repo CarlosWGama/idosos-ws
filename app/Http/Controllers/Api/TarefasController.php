@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Tarefa;
 /**
@@ -34,7 +33,7 @@ class TarefasController extends ApiController {
         //Caso tenha imagem, salva a imagem
         if (!empty($request->tarefa['imagem'])) {
             $tarefa->imagem = $nomeArquivo = 'tarefa_'.$tarefa->id.'.png';
-            $this->salvarImagem($request->tarefa['imagem'], $nomeArquivo);
+            $this->salvarImagem($request->tarefa['imagem'], $nomeArquivo, 'fotos');
             $tarefa->save();
         }
         return response()->json($tarefa, 201);
@@ -76,7 +75,7 @@ class TarefasController extends ApiController {
         //Caso tenha imagem, salva a imagem
         if (!empty($request->tarefa['imagem']) && substr($request->tarefa['imagem'], 0, 4) == 'data') {
             $tarefa->imagem = $nomeArquivo = 'tarefa_'.$tarefa->id.'.jpg';
-            $this->salvarImagem($request->tarefa['imagem'], $nomeArquivo);
+            $this->salvarImagem($request->tarefa['imagem'], $nomeArquivo, 'fotos');
         }
         
         $tarefa->save();
@@ -94,14 +93,4 @@ class TarefasController extends ApiController {
         return response()->json('Tarefa excluída com sucesso', 200);
     }
 
-    /** 
-     * Recebe a imagem na base64
-     * @param $uriBase64 | Imagem com toda URI data:image/png;base64,
-     * @param $nomeArquivo | Qual nome do arquivo para ser salvo
-     */
-    private function salvarImagem(string $uriBase64, string $nomeArquivo) {
-        $vetor = explode(',', $uriBase64);
-        $imagemBase64 = end($vetor);
-        file_put_contents(storage_path('app/public/fotos/'.$nomeArquivo), base64_decode($imagemBase64));
-    }
 }
