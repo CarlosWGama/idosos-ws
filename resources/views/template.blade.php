@@ -34,9 +34,7 @@
     <!-- Jquery JS-->
     <script src="{{asset('others/jquery-3.2.1.min.js')}}"></script>
 
-    <style>
-        @stack('css')
-    </style>
+    @stack('css')
     
     @if(isset($fileupload))
     <link rel="stylesheet" href="{{asset('others/fileupload/fileupload.css')}}">
@@ -91,6 +89,7 @@
                             <a href="{{route('casa.historico')}}"><i class="fas fa-home"></i>Histórico</a>
                             <a href="{{route('casa.fotos')}}"><i class="fas fa-camera"></i>Fotos</a>
                             <a href="{{route('contatos.listar')}}"><i class="fas fa-phone"></i>Contatos</a>
+                            <a href="{{route('eventos.listar')}}"><i class="fas fa-calendar"></i>Agenda</a>
                         </li>
                     </ul>
                 </div>
@@ -131,6 +130,7 @@
                                 <li><a href="{{route('casa.historico')}}">Histórico</a></li>
                                 <li><a href="{{route('casa.fotos')}}">Fotos</a></li>
                                 <li><a href="{{route('contatos.listar')}}">Contatos</a></li>
+                                <li><a href="{{route('eventos.listar')}}">Agenda</a></li>
                         </li>
                     </ul>
                 </nav>
@@ -147,7 +147,7 @@
                         <div class="header-wrap">
                             
                             <div class="header-button">
-                                <h1 style="width:700px">@yield('titulo')</h1>         
+                                <h1>@yield('titulo')</h1>         
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="content">

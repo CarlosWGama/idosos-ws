@@ -3,6 +3,7 @@
 @section('titulo', 'Fotos')
 
 @push('css')
+    <style>
     #fotos {
         padding: 0px 20px;
     }
@@ -10,6 +11,7 @@
     .foto-img {
         max-height: 100px;
     }
+    </style>
 @endpush
 
 @section('conteudo')

@@ -1,8 +1,5 @@
-# WebService e Gerenciador em Laravel
+# webservice da casa do Pobre
 
-Um gerenciador básico como modelo para construção de Webservices e gerenciadores 
-
+O Gerenciador e WebService da Casa do Pobre
 -----
 Autor: Carlos W. Gama
-
-Licença: MIT

@@ -50,6 +50,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
             Route::post('/editar/{id}', 'ContatosController@editar')->name('contatos.editar');
             Route::get('/excluir/{id?}', 'ContatosController@excluir')->name('contatos.excluir');
         });
+
+        //Eventos (Agenda)
+        Route::group(['prefix' => 'eventos'], function () {
+            Route::get('/', 'EventosController@index')->name('eventos.listar');
+            Route::get('/novo', 'EventosController@novo')->name('eventos.novo');
+            Route::post('/cadastrar', 'EventosController@cadastrar')->name('eventos.cadastrar');
+            Route::get('/edicao/{id}', 'EventosController@edicao')->name('eventos.edicao');
+            Route::post('/editar/{id}', 'EventosController@editar')->name('eventos.editar');
+            Route::get('/excluir/{id?}', 'EventosController@excluir')->name('eventos.excluir');
+        });
     });
 
 });
