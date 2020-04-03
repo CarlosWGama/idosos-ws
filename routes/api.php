@@ -26,12 +26,11 @@ Route::group(['prefix' => 'casa'], function () {
 });
 
 Route::group(['middleware' => ['jwt']], function () {   
-    // Route::group(['prefix' => 'tarefas'], function () {
-    //     Route::post('/', 'Api\TarefasController@cadastrar');
-    //     Route::get('/', 'Api\TarefasController@listar');
-    //     Route::get('/{id}', 'Api\TarefasController@buscar');
-    //     Route::put('/{id}', 'Api\TarefasController@atualizar');
-    //     Route::delete('/{id}', 'Api\TarefasController@remover');
-    // }); 
+    Route::group(['prefix' => 'usuarios'], function () {
+        Route::post('/alunos', 'Api\UsuariosController@cadastrarAluno');
+        Route::get('/alunos', 'Api\UsuariosController@buscarAlunos');
+        Route::put('/alunos/{id}', 'Api\UsuariosController@atualizarAluno');
+        Route::delete('/alunos/{id}', 'Api\UsuariosController@excluirAluno');
+    }); 
 
 });
