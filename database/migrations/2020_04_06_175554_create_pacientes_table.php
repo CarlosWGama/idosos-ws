@@ -19,7 +19,7 @@ class CreatePacientesTable extends Migration
             $table->date('data_nascimento');
             $table->boolean('masculino')->comment('True - Masculino | 1 - Feminino');
             $table->tinyInteger('escolaridade')->comment('0 -> Analfabeto | 1 - Estudou menos que 4 anos | 2 - Estudou mais de 4 anos'); 
-            $table->boolean('tem_filhos');
+            $table->boolean('tem_filhos')->default(false);
             $table->tinyInteger('estado_civil')->comment('1 - Solteiro | 2 - Casado | 3 - viuvo | 4 - Separado ou Divorciado');
             $table->tinyInteger('frequencia_familiar')->comment('0 - Nunca ou Raramento | 1 - As vezes | 2 - Sempre');
             $table->date('data_admissao');
