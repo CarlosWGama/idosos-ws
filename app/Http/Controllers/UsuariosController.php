@@ -15,7 +15,7 @@ class UsuariosController extends Controller {
 
     /** Lista o usuários */
     public function index() {
-        $this->dados['usuarios'] = Usuario::with('Profissao')->paginate(10);
+        $this->dados['usuarios'] = Usuario::where('deletado', false)->with('Profissao')->paginate(10);
         return view('usuarios.listar', $this->dados);
     }
 
@@ -48,7 +48,7 @@ class UsuariosController extends Controller {
      * @param $id id do usuário
      */
     public function edicao(int $id) {
-        $this->dados['usuario'] = Usuario::findOrFail($id);
+        $this->dados['usuario'] = Usuario::where('id',$id)->where('deletado', false)->firstOrFail();
         $this->dados['profissoes'] = Profissao::all();
 
         return view('usuarios.edicao', $this->dados);
@@ -75,7 +75,10 @@ class UsuariosController extends Controller {
      * @param $id id do usuário
      */
     public function excluir(int $id) {
-        Usuario::destroy($id);
+        // Usuario::destroy($id);
+        $usuario = Usuario::findOrFail($id);
+        $usuario->deletado = true;
+        $usuario->save();
         return redirect()->route('usuarios.listar')->with('sucesso', 'Usuário excluido');
     }
 }

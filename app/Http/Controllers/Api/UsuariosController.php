@@ -18,6 +18,7 @@ class UsuariosController extends ApiController {
     public function logar(Request $request) {
         $usuario = Usuario::where('id', $request->codigo)
                             ->where('senha', md5($request->senha))
+                            ->where('deletado', false)
                             ->firstOrFail(); //Senão achar retorna 404
 
         $jwt = JWT::encode(['id' => $usuario->id], config('jwt.senha'));
@@ -27,7 +28,7 @@ class UsuariosController extends ApiController {
     /** Cadastra um aluno */
     public function cadastrarAluno(Request $request) {
         $usuarioID = $this->getUsuarioID($request);
-        $professor = Usuario::findOrFail($usuarioID);
+        $professor = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
 
         $validation = Validator::make($request->aluno, [
             'nome'          => 'required',
@@ -66,7 +67,8 @@ class UsuariosController extends ApiController {
         $dados = $request->aluno;
         if (empty($dados['senha'])) unset($dados['senha']);
         else $dados['senha'] = md5($dados['senha']);
-        $aluno = Usuario::where('id', $id)->where('professor_id', $usuarioID)->firstOrFail();
+        
+        $aluno = Usuario::where('id', $id)->where('deletado', false)->where('professor_id', $usuarioID)->firstOrFail();
         $aluno->fill($dados);
         $aluno->save();
 
@@ -76,7 +78,7 @@ class UsuariosController extends ApiController {
     /** Busca os alunos daquele professor */
     public function buscarAlunos(Request $request) {
         $usuarioID = $this->getUsuarioID($request);
-        $alunos =  Usuario::where('professor_id', $usuarioID)->get();
+        $alunos =  Usuario::where('professor_id', $usuarioID)->where('deletado', false)->get();
         return response()->json(['alunos' => $alunos], 201);
     }
 
@@ -86,8 +88,9 @@ class UsuariosController extends ApiController {
      */
     public function excluirAluno(Request $request, int $id) {
         $usuarioID = $this->getUsuarioID($request);
-        $usuario = Usuario::where('professor_id', $usuarioID)->where('id', $id)->firstOrFail();
-        $usuario->delete();
+        $usuario = Usuario::where('professor_id', $usuarioID)->where('id', $id)->where('deletado', false)->firstOrFail();
+        $usuario->deletado = true;
+        $usuario->save();
         return response()->json('Aluno excluído com sucesso', 200);
     }
 }

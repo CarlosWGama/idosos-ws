@@ -17,7 +17,7 @@ class LoginController extends Controller {
 
     /** Faz com o que o usuário tente realizar o login */
     public function logar(Request $request) {
-        $usuario = Usuario::where('id', $request->id)->where('senha', md5($request->senha))->where('admin', true)->first();
+        $usuario = Usuario::where('id', $request->id)->where('senha', md5($request->senha))->where('admin', true)->where('deletado', false)->first();
         if ($usuario != null) {
             session(['usuario' => $usuario]);
             return redirect()->route('dashboard');

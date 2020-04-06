@@ -22,6 +22,7 @@ class CriaTabelaUsuarios extends Migration
             $table->unsignedBigInteger('profissao_id')->nullable();
             $table->foreign('profissao_id')->references('id')->on('profissoes');
             $table->integer('nivel_acesso')->default(1); //1Professor (Pode tudo no paciente e cadastrar equipe)|2Moderador(Acesso total ao paciente)|3Aluno(Acesso limitado ao paciente) 
+            $table->boolean('deletado')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
