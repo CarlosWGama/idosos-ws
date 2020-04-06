@@ -27,17 +27,25 @@ Route::group(['prefix' => 'casa'], function () {
 
 Route::group(['middleware' => ['jwt']], function () {   
 
-    
+    //Casa do Pobre
     Route::group(['prefix' => 'casa'], function () {
         Route::post('agenda', 'Api\CasaDoPobreController@cadastrarEvento');
         Route::delete('agenda/{id}', 'Api\CasaDoPobreController@excluirEvento');
     });
 
+    //Usuarios
     Route::group(['prefix' => 'usuarios'], function () {
         Route::post('/alunos', 'Api\UsuariosController@cadastrarAluno');
         Route::get('/alunos', 'Api\UsuariosController@buscarAlunos');
         Route::put('/alunos/{id}', 'Api\UsuariosController@atualizarAluno');
         Route::delete('/alunos/{id}', 'Api\UsuariosController@excluirAluno');
     }); 
+
+    //Pacientes
+    Route::group(['prefix' => 'pacientes'], function () {
+        Route::post('', 'Api\PacientesController@cadastrar');
+        Route::put('/{id}', 'Api\PacientesController@atualizar');
+        Route::get('{genero?}', 'Api\PacientesController@buscarTodos');
+    });
 
 });

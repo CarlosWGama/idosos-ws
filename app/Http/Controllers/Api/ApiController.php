@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Usuario;
 use Firebase\JWT\JWT;
 
 class ApiController extends Controller {
@@ -28,5 +29,17 @@ class ApiController extends Controller {
         $vetor = explode(',', $uriBase64);
         $imagemBase64 = end($vetor);
         file_put_contents(storage_path("app/public/$pasta/$nomeArquivo"), base64_decode($imagemBase64));
+    }
+
+
+    /**
+     * Valida o acesso do Usuário ao modulo
+     * @param $usuarioID | Id do usuário
+     * @return boolean | True -> Acesso liberado | False -> Acesso bloqueado
+     */
+    protected function validaAcesso(int $usuarioID, array $nivelAcesso = [1, 2]): bool {
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
+        //Acesso negado para aluno
+        return (in_array($usuario->nivel_acesso, $nivelAcesso));
     }
 }
