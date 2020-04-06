@@ -27,7 +27,7 @@ class AdicionarProfessorAluno extends Migration
     public function down()
     {
         Schema::table('usuarios', function (Blueprint $table) {
-            $table->dropForeign('professor_id');
+            $table->dropForeign('usuarios_professor_id_foreign');
             $table->dropColumn('professor_id');
         });
     }
