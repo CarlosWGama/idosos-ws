@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DadosClinicos;
 use App\Models\Paciente;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,6 +40,10 @@ class PacientesController extends ApiController {
         $paciente['data_nascimento'] = date('Y-m-d', strtotime($paciente['data_nascimento']));
         $paciente['data_admissao'] = date('Y-m-d', strtotime($paciente['data_admissao']));
         $paciente = Paciente::create($paciente);
+
+        //Cria Dados Clinicos Gerais
+        $dadosClinicos = DadosClinicos::create(['paciente_id' => $paciente->id]);
+        $dadosClinicos->condicoesClinicas()->sync([1]); //Sem condições clinicas diferentes
 
         //Adiciona a foto
         $paciente->foto = $nomeArquivo = 'paciente_'.$paciente->id.'.png';
@@ -111,5 +116,61 @@ class PacientesController extends ApiController {
         $paciente = Paciente::findOrFail($pacienteID);
         
         return response()->json(['paciente' => $paciente], 200);
+    }
+
+    /**
+     * Atualiza os dados clinicos de um paciente 
+     */ 
+    public function atualizarDadosClinicos(Request $request, int $pacienteID) {
+        $usuarioID = $this->getUsuarioID($request);
+    
+        //Acesso negado para aluno
+        if (!$this->validaAcesso($usuarioID)) 
+          return response()->json('Para atualizar os dados clínicos dos paciente, é necessário ser Professor ou Moderador', 403);
+
+        $validation = Validator::make($request->dados, [
+            'condicoes_clinicas'        => 'required',
+            'plano'                     => 'required',
+            'cartao_sus'                => 'required',
+            'fumante'                   => 'required',
+            'fumante_idade'             => 'nullable|integer',
+            'fumante_media_cigarros'    => 'nullable|integer',
+            'etilista'                  => 'required|integer',
+            'sono'                      => 'required|integer',
+            'protese_dentaria'          => 'required|boolean',
+            'medicamento_continuo'      => 'required|boolean',
+            'medicamento_fornecimento'  => 'required|integer',
+            'queda'                     => 'required|integer',
+            'dispositivo_andar'         => 'required|integer',
+            'medicamento_continuo'      => 'required|boolean',
+            'atividade_recreativa'      => 'required|boolean',
+            'cf_banhar'                 => 'required|integer',
+            'cf_vestir'                 => 'required|integer',
+            'cf_uso_banheiro'           => 'required|integer',
+            'cf_transferir'             => 'required|integer',
+            'cf_continencia'            => 'required|integer',
+            'cf_alimentar'              => 'required|integer'
+        ]);
+
+        if ($validation->fails()) return response()->json($validation->errors(), 400);
+
+        $dados = $request->except(['dados.paciente_id', 'dados.id'])['dados'];
+        $dadosClinicos = DadosClinicos::where('paciente_id', $pacienteID)->firstOrFail();
+
+        //Condições clinicas
+        $dadosClinicos->condicoesClinicas()->sync($dados['condicoes_clinicas']); //Remove todas condições clinicas
+        unset($dados['condicoes_clinicas']);
+
+        $dadosClinicos->fill($dados);
+        
+        $dadosClinicos->save();
+        return response()->json($dadosClinicos, 200);
+
+    }
+
+    /** Recupera dados clínicos gerais do paciente */
+    public function dadosClinicos(int $pacienteID) {
+        $dados = DadosClinicos::where('paciente_id', $pacienteID)->firstOrFail();
+        return response()->json(['dados' => $dados], 200);
     }
 }

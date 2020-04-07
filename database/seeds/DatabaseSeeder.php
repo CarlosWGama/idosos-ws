@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfissaoSeed::class);
         $this->call(UsuarioSeed::class);
         $this->call(HistoricoSeed::class);
+        $this->call(CondicaoClinicaSeed::class);
     }
 }

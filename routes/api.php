@@ -46,6 +46,8 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::post('', 'Api\PacientesController@cadastrar');
         Route::put('/{id}', 'Api\PacientesController@atualizar');
         Route::get('{genero?}', 'Api\PacientesController@buscarTodos');
+        Route::put('/dados-clinicos/{id}', 'Api\PacientesController@atualizarDadosClinicos');
+        Route::get('/dados-clinicos/{id}', 'Api\PacientesController@dadosClinicos');
     });
 
 });
