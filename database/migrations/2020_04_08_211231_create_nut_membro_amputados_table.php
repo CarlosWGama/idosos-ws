@@ -27,6 +27,6 @@ class CreateNutMembroAmputadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nut_membro_amputados');
+        Schema::dropIfExists('nut_membros_amputados');
     }
 }

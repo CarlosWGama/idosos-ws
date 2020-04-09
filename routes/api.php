@@ -50,4 +50,18 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/dados-clinicos/{id}', 'Api\PacientesController@dadosClinicos');
     });
 
+    //Prontuarios
+    Route::group(['prefix' => 'prontuarios'], function () {
+        
+        //Nutrição
+        Route::group(['prefix' => 'nutricao'], function () {
+            Route::get('/', 'Api\ProntuarioNutricaoController@buscarTodos');
+            Route::get('/ficha', 'Api\ProntuarioNutricaoController@buscarFicha');
+            Route::get('/{id}', 'Api\ProntuarioNutricaoController@buscar');
+            Route::post('', 'Api\ProntuarioNutricaoController@cadastrar');
+            Route::put('/{id}', 'Api\ProntuarioNutricaoController@atualizar');
+            Route::put('/aprovacao/{id}', 'Api\ProntuarioNutricaoController@aprovar');
+        });
+    });
+
 });

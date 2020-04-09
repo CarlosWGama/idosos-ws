@@ -28,6 +28,6 @@ class CreateSaudeGastrointestinalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saude_gastrointestinals');
+        Schema::dropIfExists('nut_saude_gastroinsteinal');
     }
 }

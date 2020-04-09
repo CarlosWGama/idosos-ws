@@ -35,6 +35,7 @@ class ApiController extends Controller {
     /**
      * Valida o acesso do Usuário ao modulo
      * @param $usuarioID | Id do usuário
+     * @param $nivelAcesso | um array com 1 -> Professor | 2 -> Moderador | 3 -> Aluno
      * @return boolean | True -> Acesso liberado | False -> Acesso bloqueado
      */
     protected function validaAcesso(int $usuarioID, array $nivelAcesso = [1, 2]): bool {

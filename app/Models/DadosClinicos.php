@@ -31,8 +31,4 @@ class DadosClinicos extends Model {
         foreach ($dados as $c) $condicoes[] = $c->condicao_clinica_id;
         return $condicoes;
     }
-
-    public function getCondicoesAttributos() {
-
-    }
 }
