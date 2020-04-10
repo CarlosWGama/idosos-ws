@@ -202,7 +202,7 @@ class ProntuarioNutricaoController extends ApiController {
 
         //Atualiza
         //Remove os campos que não devem ser atualizados por aqui
-        $dados = $request->except(['dados.paciente_id', 'dados.id', 'dados.usuario_id', 'dados.aprovado'])['dados'];
+        $dados = $request->except(['dados.paciente_id', 'dados.usuario', 'dados.id', 'dados.usuario_id', 'dados.aprovado'])['dados'];
         
         $dados['data'] = date('Y-m-d', strtotime($dados['data']));
 
