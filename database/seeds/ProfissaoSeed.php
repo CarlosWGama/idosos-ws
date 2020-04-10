@@ -14,6 +14,7 @@ class ProfissaoSeed extends Seeder
         Profissao::insert([
             ['nome'  => 'Geral', 'exibir'=>false],
             ['nome'  => 'Nutricionista', 'exibir'=>true],
+            ['nome'  => 'Odontologia', 'exibir'=>true],
         ]);
     }
 }

@@ -38,9 +38,9 @@ class UsuariosController extends Controller {
         ]);
         $dados = $request->all();
         $dados['senha'] = md5($dados['senha']);
-        Usuario::create($dados);
+        $usuario = Usuario::create($dados);
 
-        return redirect()->route('usuarios.listar')->with(['sucesso' => 'Usuário cadastrado com sucesso']);
+        return redirect()->route('usuarios.listar')->with(['sucesso' => 'Usuário cadastrado com sucesso. Código de acesso: ' . $usuario->id]);
     }
 
     /** 

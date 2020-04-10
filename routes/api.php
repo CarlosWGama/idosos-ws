@@ -64,4 +64,16 @@ Route::group(['middleware' => ['jwt']], function () {
         });
     });
 
+    //Medicamentos
+    Route::group(['prefix' => 'medicamentos'], function () {
+
+            Route::get('/ativo/{pacienteID}/{areaID?}', 'Api\MedicamentosController@ativos');
+            Route::get('/inativo/{pacienteID}/{areaID?}', 'Api\MedicamentosController@inativos');
+            Route::post('', 'Api\MedicamentosController@cadastrar');
+            Route::put('/ativacao/{id}/{ativo}', 'Api\MedicamentosController@ativacao');
+            Route::put('/{id}', 'Api\MedicamentosController@atualizar');
+            Route::delete('/{id}', 'Api\MedicamentosController@excluir');
+        
+    });
+
 });
