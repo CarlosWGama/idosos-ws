@@ -17,6 +17,5 @@ class DatabaseSeeder extends Seeder
         $this->call(CondicaoClinicaSeed::class);
         $this->call(NutSaudeGastroSeed::class);
         $this->call(NutMembroAmputadoSeed::class);
- }
     }
 }
