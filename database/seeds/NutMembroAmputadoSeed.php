@@ -1,6 +1,6 @@
 <?php
 
-use App\NutMembroAmputado;
+use App\Models\NutMembroAmputado;
 use Illuminate\Database\Seeder;
 
 class NutMembroAmputadoSeed extends Seeder
