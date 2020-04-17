@@ -84,13 +84,14 @@ class PacientesController extends ApiController {
         $dados['data_admissao'] = date('Y-m-d', strtotime($dados['data_admissao']));
         $paciente = Paciente::findOrFail($pacienteID);
         $paciente->fill($dados);
-        $paciente->save();
 
         //Adiciona a foto
         if (!empty($request->paciente['foto']) && substr($request->paciente['foto'], 0, 4) == 'data') {
-            $nomeArquivo = 'paciente_'.$paciente->id.'.png';
+            $paciente->foto = $nomeArquivo = 'paciente_'.$paciente->id.'.png';
             $this->salvarImagem($request->paciente['foto'], $nomeArquivo, 'pacientes');
         }
+        
+        $paciente->save();
         
         return response()->json($paciente, 200);
     }
