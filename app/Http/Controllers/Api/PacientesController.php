@@ -46,7 +46,7 @@ class PacientesController extends ApiController {
         $dadosClinicos->condicoesClinicas()->sync([1]); //Sem condições clinicas diferentes
 
         //Adiciona a foto
-        $paciente->foto = $nomeArquivo = 'paciente_'.$paciente->id.'.png';
+        $paciente->foto = $nomeArquivo = 'paciente_'.$paciente->id.'.jpg';
         $this->salvarImagem($request->paciente['foto'], $nomeArquivo, 'pacientes');
         $paciente->save();
         
@@ -87,7 +87,7 @@ class PacientesController extends ApiController {
 
         //Adiciona a foto
         if (!empty($request->paciente['foto']) && substr($request->paciente['foto'], 0, 4) == 'data') {
-            $paciente->foto = $nomeArquivo = 'paciente_'.$paciente->id.'.png';
+            $paciente->foto = $nomeArquivo = 'paciente_'.$paciente->id.'.jpg';
             $this->salvarImagem($request->paciente['foto'], $nomeArquivo, 'pacientes');
         }
         
