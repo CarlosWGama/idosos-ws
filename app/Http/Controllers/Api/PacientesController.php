@@ -130,7 +130,6 @@ class PacientesController extends ApiController {
           return response()->json('Para atualizar os dados clínicos dos paciente, é necessário ser Professor ou Moderador', 403);
 
         $validation = Validator::make($request->dados, [
-            'condicoes_clinicas'        => 'required',
             'plano'                     => 'required',
             'cartao_sus'                => 'required',
             'fumante'                   => 'required',
