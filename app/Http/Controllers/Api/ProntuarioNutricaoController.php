@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\NutEvolucao;
 use Illuminate\Http\Request;
 use App\Models\NutProntuario;
 use App\Models\Usuario;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ProntuarioNutricaoController extends ApiController {
 
+
+    protected $areaID = 2;
 
     // ========================== FICHA ================================// 
     /** Retorna o ultimo prontuário aprovado */
@@ -28,7 +31,7 @@ class ProntuarioNutricaoController extends ApiController {
         if ($prontuario == null) $prontuario = new NutProntuario();
         
         //Avalia se é o Dono do Prontuário ou um Professor/Moderador
-        if (!in_array($usuario->nivel_acesso, [1, 2]) && $usuario->area_id = 2)
+        if (!in_array($usuario->nivel_acesso, [1, 2]) && $usuario->profissao_id = $this->areaID)
             return response()->json(['Apenas um professor/moderador de nutrição pode editar esse prontuário'], 403);
         
         $validation = Validator::make($request->dados, [
@@ -116,22 +119,90 @@ class ProntuarioNutricaoController extends ApiController {
     }
 
     // =========================== EVOLUÇÕES =============================== //
+    /** Busca as evoluções de nutrição */
+    public function buscarEvolucoes(Request $request, int $pacienteID, int $inicio = 0, int $limite = 10) {
+        $evolucoes = NutEvolucao::where('paciente_id', $pacienteID)->offset($inicio)->limit($limite)->orderBy('id', 'desc')->get();
+        return response()->json(['evolucoes' => $evolucoes], 200);
+    }
+    
+    /** Cadastra uma nova evolução */
+    public function cadastrarEvolucao(Request $request) {
+        $usuarioID = $this->getUsuarioID($request);
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
+
+        if ($usuario->profissao_id != $this->areaID)
+            return response()->json(['Apenas profissionais de nutrição podem criar esse tipo de evolução'], 403);
+
+        $validation = Validator::make($request->dados, [
+            'paciente_id'    => 'required|integer',
+            'usuario_id'     => 'required|integer',
+            'data'           => 'required',
+            'descricao'      => 'required'
+        ]);
+
+        if ($validation->fails()) return response()->json($validation->errors(), 400);
+
+        //Cadastra
+        $dados = $request->dados;
+        $dados['data'] = date('Y-m-d', strtotime($dados['data']));
+        $dados['aprovado'] = ($usuario->nivel_acesso == 1); //É professor
+        
+        $evolucao = NutEvolucao::create($dados);
+        return response()->json($evolucao, 200);
+    }
+
+    /** Atualiza uma Evolução */
+    public function atualizarEvolucao(Request $request, int $evolucaoID) {
+        $usuarioID = $this->getUsuarioID($request);
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
+
+        $evolucao = NutEvolucao::findOrFail($evolucaoID);
+
+        //Não é da area
+        if ($usuario->profissao_id != $this->areaID)
+            return response()->json(['Apenas profissionais de nutrição podem criar esse tipo de evolução'], 403);
+            
+        //Caso seja aluno, só pode alterar sua própria evolução
+        if ($usuario->nivel_acesso == 3 && $evolucao->usuario_id != $usuario->id)
+            return response()->json(['Você só pode editar suas próprias evoluções'], 403);
+            
+        //Evoluções aprovadas apenas podem ser alteradas por profesosres
+        if ($evolucao->aprovado && $usuario->nivel_acesso != 1)
+            return response()->json(['Evoluções aprovadas, apenas podem ser alteradas por professores'], 403);
+          
+        //Validação
+        $validation = Validator::make($request->dados, [
+            'data'           => 'required',
+            'descricao'      => 'required'
+        ]);
+
+        if ($validation->fails()) return response()->json($validation->errors(), 400);
+
+        //Atualiza
+        $dados = $request->only(['dados.data', 'dados.descricao'])['dados'];
+        $dados['data'] = date('Y-m-d', strtotime($dados['data']));
+        
+        $evolucao->fill($dados);
+        $evolucao->save();
+
+        return response()->json($evolucao, 200);
+    }
+    
     /** Aprova um prontuário */
-    public function aprovar(Request $request, int $id) {
+    public function aprovarEvolucao(Request $request, int $id) {
         $usuarioID = $this->getUsuarioID($request);
         //Acesso negado para aluno
         if (!$this->validaAcesso($usuarioID, [1])) 
-            return response()->json('Só professor pode aprovar prontuário', 403);
+            return response()->json('Só professor da área pode aprovar prontuário', 403);
     
-        $prontuario = NutProntuario::with('usuario')->where('id', $id)->firstOrFail();
-        if ($prontuario->usuario->professor_id != $usuarioID)
-            return response()->json('Apenas o professor do aluno pode aprovar seu prontuário', 403);
+        $evolucao = NutEvolucao::where('id', $id)->firstOrFail();
+        // if ($prontuario->usuario->professor_id != $usuarioID)
+        //     return response()->json('Apenas o professor do aluno pode aprovar seu prontuário', 403);
         
-        $prontuario->aprovado = true;
-        $prontuario->save();
+        $evolucao->aprovado = true;
+        $evolucao->save();
 
         return response()->json('Atualizado com sucesso', 200);
-
     }
 
 

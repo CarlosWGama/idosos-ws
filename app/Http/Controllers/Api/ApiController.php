@@ -8,6 +8,8 @@ use App\Models\Usuario;
 use Firebase\JWT\JWT;
 
 class ApiController extends Controller {
+
+    protected $areaID = 0;
     //
     /**
      * Recupera o ID do usuário no JWT
@@ -39,7 +41,7 @@ class ApiController extends Controller {
      * @return boolean | True -> Acesso liberado | False -> Acesso bloqueado
      */
     protected function validaAcesso(int $usuarioID, array $nivelAcesso = [1, 2]): bool {
-        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->where('profissao_id', $this->areaID)->firstOrFail();
         //Acesso negado para aluno
         return (in_array($usuario->nivel_acesso, $nivelAcesso));
     }

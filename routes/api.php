@@ -60,9 +60,10 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::put('/ficha', 'Api\ProntuarioNutricaoController@salvarFicha');
             
             //Evoluções
-            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioNutricaoController@aprovar');
-            Route::put('/evolucao/{id}', 'Api\ProntuarioNutricaoController@atualizar');
-            Route::get('/evolucao/{id}', 'Api\ProntuarioNutricaoController@buscar');
+            Route::post('/evolucao', 'Api\ProntuarioNutricaoController@cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioNutricaoController@aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'Api\ProntuarioNutricaoController@atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioNutricaoController@buscarEvolucoes');
         });
     });
 

@@ -11,7 +11,7 @@ class NutProntuario extends Model
     
    use SoftDeletes;
 
-   protected $table = 'prontuarios_nutricao';
+   protected $table = 'nut_evolucao';
 
    //Não protege nenhum campo
    protected $guarded = [];

@@ -148,16 +148,37 @@ Authorization: {{tokenProfessor}}
     }
 }
 
-### Buscar Ficha
-GET {{baseUrl}}/prontuarios/nutricao/ficha
-Authorization: {{tokenProfessor}}
-
-
 ###### PRONTUÁRIOS 
-### Buscar Evoluções
-GET {{baseUrl}}/prontuarios/nutricao
+@evolucaoID = 1
+### Buscar Evoluções (Inicio e Limite)
+GET {{baseUrl}}/prontuarios/nutricao/evolucao/{{pacienteID}}/0/10
 Authorization: {{tokenProfessor}}
+
+### Cadatra uma nova evolução
+POST {{baseUrl}/prontuarios/nutricao/evolucao
+Authorization: {{tokenProfessor}}
+
+{
+    "dados": {
+        "paciente_id": {{pacienteID}},
+        "usuario_id": 4,
+        "data": "2020-07-27"
+    }   
+}
+
+### Atualiza os dados de uma evolução
+PUT {{baseUrl}/prontuarios/nutricao/evolucao/{{evolucaoID}}
+Authorization: {{tokenAluno}}
+
+{
+    "dados": {
+        "paciente_id": {{pacienteID}},
+        "usuario_id": 4,
+        "data": "2020-07-27"
+    }   
+}
+
 
 ### Aprovar (ID Da evolução a ser aprovada)
-PUT {{url}/prontuarios/nutricao/aprovacao/5
+PUT {{baseUrl}/prontuarios/nutricao/evolucao/aprovacao/{{evolucaoID}}
 Authorization: {{tokenProfessor}}
