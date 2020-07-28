@@ -55,12 +55,14 @@ Route::group(['middleware' => ['jwt']], function () {
         
         //Nutrição
         Route::group(['prefix' => 'nutricao'], function () {
-            Route::get('/', 'Api\ProntuarioNutricaoController@buscarTodos');
-            Route::get('/ficha', 'Api\ProntuarioNutricaoController@buscarFicha');
-            Route::get('/{id}', 'Api\ProntuarioNutricaoController@buscar');
-            Route::post('', 'Api\ProntuarioNutricaoController@cadastrar');
-            Route::put('/{id}', 'Api\ProntuarioNutricaoController@atualizar');
-            Route::put('/aprovacao/{id}', 'Api\ProntuarioNutricaoController@aprovar');
+            //Ficha
+            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioNutricaoController@buscarFicha');
+            Route::put('/ficha', 'Api\ProntuarioNutricaoController@salvarFicha');
+            
+            //Evoluções
+            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioNutricaoController@aprovar');
+            Route::put('/evolucao/{id}', 'Api\ProntuarioNutricaoController@atualizar');
+            Route::get('/evolucao/{id}', 'Api\ProntuarioNutricaoController@buscar');
         });
     });
 

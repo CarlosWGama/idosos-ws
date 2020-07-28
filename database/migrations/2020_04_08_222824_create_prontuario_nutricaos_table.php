@@ -17,8 +17,6 @@ class CreateProntuarioNutricaosTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('paciente_id');
             $table->foreign('paciente_id')->references('id')->on('pacientes');
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
             
             //Para saber os valores tomar como base nutricao-ficha.page.html
             //Formulário
