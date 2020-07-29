@@ -18,7 +18,6 @@ class PacientesController extends ApiController {
         if (!$this->validaAcesso($usuarioID)) 
             return response()->json('Para cadastrar paciente, é necessário ser Professor ou Moderador', 403);
 
-
         $validation = Validator::make($request->paciente, [
             'nome'                  => 'required',
             'data_nascimento'       => 'required|date',

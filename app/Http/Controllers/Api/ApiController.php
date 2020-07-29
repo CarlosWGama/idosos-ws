@@ -41,7 +41,10 @@ class ApiController extends Controller {
      * @return boolean | True -> Acesso liberado | False -> Acesso bloqueado
      */
     protected function validaAcesso(int $usuarioID, array $nivelAcesso = [1, 2]): bool {
-        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->where('profissao_id', $this->areaID)->firstOrFail();
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false);
+        if ($this->areaID != 0)
+            $usuario = $usuario->where('profissao_id', $this->areaID);
+        $usuario = $usuario->firstOrFail();
         //Acesso negado para aluno
         return (in_array($usuario->nivel_acesso, $nivelAcesso));
     }

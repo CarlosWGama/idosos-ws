@@ -9,7 +9,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-		"codigo": 4,
+		"codigo": 2,
 		"senha":"123456"
 }
 
@@ -62,17 +62,19 @@ Authorization: {{tokenProfessor}}
 ###############                     NUTRIÇÃO                      ###############
 #################################################################################
 @pacienteID = 1
+@tokenProfessorNUT = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.EVGC36tvMWZqq24TdpAqBqbSWBHcUzqGWeYy5jO10MU
+@tokenAlunoNUT = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NH0.r6ss3Uo-NHxfB_VT50XA12wHPm8YXg0LBFwMjEyjUkM
 ######### Ficha
 ### Buscar Ficha
 
 GET {{baseUrl}}/prontuarios/nutricao/ficha/{{pacienteID}}
 Content-Type: application/json
-Authorization: {{tokenProfessor}}
+Authorization: {{tokenProfessorNUT}}
 
 ### Enviar Ficha
 PUT {{baseUrl}}/prontuarios/nutricao/ficha
 Content-Type: application/json
-Authorization: {{tokenProfessor}}
+Authorization: {{tokenProfessorNUT}}
 
 { 
     "dados": {
@@ -152,11 +154,11 @@ Authorization: {{tokenProfessor}}
 @evolucaoID = 1
 ### Buscar Evoluções (Inicio e Limite)
 GET {{baseUrl}}/prontuarios/nutricao/evolucao/{{pacienteID}}/0/10
-Authorization: {{tokenProfessor}}
+Authorization: {{tokenProfessorNUT}}
 
 ### Cadatra uma nova evolução
-POST {{baseUrl}/prontuarios/nutricao/evolucao
-Authorization: {{tokenProfessor}}
+POST {{baseUrl}}/prontuarios/nutricao/evolucao
+Authorization: {{tokenAlunoNUT}}
 
 {
     "dados": {
@@ -167,8 +169,8 @@ Authorization: {{tokenProfessor}}
 }
 
 ### Atualiza os dados de uma evolução
-PUT {{baseUrl}/prontuarios/nutricao/evolucao/{{evolucaoID}}
-Authorization: {{tokenAluno}}
+PUT {{baseUrl}}/prontuarios/nutricao/evolucao/{{evolucaoID}}
+Authorization: {{tokenAlunoNUT}}
 
 {
     "dados": {
@@ -180,5 +182,122 @@ Authorization: {{tokenAluno}}
 
 
 ### Aprovar (ID Da evolução a ser aprovada)
-PUT {{baseUrl}/prontuarios/nutricao/evolucao/aprovacao/{{evolucaoID}}
-Authorization: {{tokenProfessor}}
+PUT {{baseUrl}}/prontuarios/nutricao/evolucao/aprovacao/{{evolucaoID}}
+Authorization: {{tokenProfessorNUT}}
+
+
+#################################################################################
+###############                 EDUCAÇÃO FÍSICA                   ###############
+#################################################################################
+@pacienteID = 1
+@tokenProfessorEF = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NX0.YE_SloNM7upAVAspp69EsG8DR_cxmAIGIkMUE9iUONs
+@tokenAlunoEF = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Nn0.CdFfPhPqlU7eICR9_DwNcSXR36ufdSY5joL_Fd3uPoo
+######### Ficha
+### Buscar Ficha
+
+GET {{baseUrl}}/prontuarios/educacao-fisica/ficha/{{pacienteID}}
+Content-Type: application/json
+Authorization: {{tokenProfessorEF}}
+
+### Enviar Ficha
+PUT {{baseUrl}}/prontuarios/educacao-fisica/ficha
+Content-Type: application/json
+Authorization: {{tokenProfessorEF}}
+
+{ 
+    "dados": {
+		"data": "2020-04-09",
+		"paciente_id": 1,
+		"gricemia_capilar": 100,
+        "pressao_arterial": 120,
+        "frequencia_cardiaca": 60,
+        "saturacao": 80,
+        "temperatura": 36.5,
+        "pas_tornozelo_direito": 10,
+        "pas_tornozelo_esquerdo": 20,
+        "pas_braquial_direito": 30,
+        "pas_braquial_esquerdo": 40,
+        "indice_tornozelo_braquial_direito": 50,
+        "indice_tornozelo_braquial_esquerdo": 60,
+            
+        //Desempenho Funcional
+        "sentar_cadeira": 10,
+        "flexao_cotovelo": 12,
+        "sentar_pes": 13,
+        "time_up_go": 14,
+        "costas_maos": 15,
+        "caminhada": 20,
+            
+        //Antropometria
+        "massa_corporal": 60,
+        "imc": 21.5,
+        "estatura": 164,
+
+        //Força e Pressão Manual
+        "pressoa_manual1": 20,
+        "pressoa_manual2": 10,
+        "pressoa_manual3": 30
+    }
+}
+
+###### PRONTUÁRIOS 
+@evolucaoID = 1
+### Buscar Evoluções (Inicio e Limite)
+GET {{baseUrl}}/prontuarios/educacao-fisica/evolucao/{{pacienteID}}/0/10
+Authorization: {{tokenProfessorEF}}
+
+### Cadatra uma nova evolução
+POST {{baseUrl}}/prontuarios/educacao-fisica/evolucao
+Content-Type: application/json
+Authorization: {{tokenAlunoEF}}
+
+{
+    "dados": {
+        "paciente_id": {{pacienteID}},
+        "data": "2020-07-27",
+
+		//Desempenho Funcional
+        "sentar_cadeira": 10,
+        "flexao_cotovelo": 12,
+        "sentar_pes": 13,
+        "time_up_go": 14,
+        "costas_maos": 15,
+        "caminhada": 20,
+            
+        //Antropometria
+        "massa_corporal": 60,
+        "imc": 21.5,
+        "estatura": 164,
+
+        //Força e Pressão Manual
+        "pressoa_manual1": 20,
+        "pressoa_manual2": 10,
+        "pressoa_manual3": 30,
+
+		//Hemodinâmica
+        "pas": 30,
+        "pad": 20,
+    	"fc": 10,
+		"conduta": "aaaaaa"
+    }   
+}
+
+### Atualiza os dados de uma evolução
+PUT {{baseUrl}}/prontuarios/educacao-fisica/evolucao/{{evolucaoID}}
+Content-Type: application/json
+Authorization: {{tokenAlunoEF}}
+
+{
+    "dados": {
+        "paciente_id": {{pacienteID}},
+        "usuario_id": 4,
+        "data": "2020-07-27",
+
+		"conduta": "bbbbb"
+    }   
+}
+
+
+### Aprovar (ID Da evolução a ser aprovada)
+PUT {{baseUrl}}/prontuarios/educacao-fisica/evolucao/aprovacao/{{evolucaoID}}
+Authorization: {{tokenProfessorEF}}

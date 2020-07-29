@@ -65,6 +65,19 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::put('/evolucao/{id}', 'Api\ProntuarioNutricaoController@atualizarEvolucao');
             Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioNutricaoController@buscarEvolucoes');
         });
+
+         //Educação Física
+         Route::group(['prefix' => 'educacao-fisica'], function () {
+            //Ficha
+            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioEducacaoFisicaController@buscarFicha');
+            Route::put('/ficha', 'Api\ProntuarioEducacaoFisicaController@salvarFicha');
+            
+            //Evoluções
+            Route::post('/evolucao', 'Api\ProntuarioEducacaoFisicaController@cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioEducacaoFisicaController@aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'Api\ProntuarioEducacaoFisicaController@atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEducacaoFisicaController@buscarEvolucoes');
+        });
     });
 
     //Medicamentos
