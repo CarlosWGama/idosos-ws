@@ -16,7 +16,7 @@ class ProntuarioEducacaoFisicaController extends ApiController {
     /** Retorna o ultimo prontuário aprovado */
     public function buscarFicha(int $pacienteID) {
         $prontuario = EduFisProntuario::where('paciente_id', $pacienteID)->orderBy('id', 'desc')->first();
-        if (!$prontuario) $prontuario = new EduFisProntuario;
+        if (!$prontuario) $prontuario = new \stdClass();
         return response()->json(['prontuario' => $prontuario], 200);
     }
 
@@ -38,17 +38,17 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             'data'                              => 'required',
             
             //Ficha principal
-            'gricemia_capilar'                  => 'numeric|nullable',
-            'pressao_arterial'                  => 'numeric|nullable',
-            'frequencia_cardiaca'               => 'numeric|nullable',
-            'saturacao'                         => 'numeric|nullable',
+            'glicemia_capilar'                  => 'nullable|numeric',
+            'pressao_arterial'                  => 'integer|nullable',
+            'frequencia_cardiaca'               => 'integer|nullable',
+            'saturacao'                         => 'integer|nullable',
             'temperatura'                       => 'numeric|nullable',
-            'pas_tornozelo_direito'             => 'numeric|nullable',
-            'pas_tornozelo_esquerdo'            => 'numeric|nullable',
-            'pas_braquial_direito'              => 'numeric|nullable',
-            'pas_braquial_esquerdo'             => 'numeric|nullable',
-            'indice_tornozelo_braquial_direito' => 'numeric|nullable',
-            'indice_tornozelo_braquial_esquerdo'=> 'numeric|nullable',
+            'pas_tornozelo_direito'             => 'integer|nullable',
+            'pas_tornozelo_esquerdo'            => 'integer|nullable',
+            'pas_braquial_direito'              => 'integer|nullable',
+            'pas_braquial_esquerdo'             => 'integer|nullable',
+            'indice_tornozelo_braquial_direito' => 'integer|nullable',
+            'indice_tornozelo_braquial_esquerdo'=> 'integer|nullable',
             
             //Desempenho Funcional
             'sentar_cadeira'                    => 'integer|nullable',
@@ -64,9 +64,9 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             'estatura'                          => 'integer|nullable',
 
             //Força e Pressão Manual
-            'pressoa_manual1'                   => 'numeric|nullable',
-            'pressoa_manual2'                   => 'numeric|nullable',
-            'pressoa_manual3'                   => 'numeric|nullable'
+            'preensao_manual1'                   => 'numeric|nullable',
+            'preensao_manual2'                   => 'numeric|nullable',
+            'preensao_manual3'                   => 'numeric|nullable'
         
         ]);
 
@@ -76,7 +76,13 @@ class ProntuarioEducacaoFisicaController extends ApiController {
         $dados = $request->except(['dados.id'])['dados'];
 
         $dados['data'] = date('Y-m-d', strtotime($dados['data']));
-
+        if (!empty($dados['glicemia_capilar'])) $dados['glicemia_capilar'] = number_format($dados['glicemia_capilar'], 2, '.', '');
+        if (!empty($dados['temperatura'])) $dados['temperatura'] = number_format($dados['temperatura'], 2, '.', '');
+        if (!empty($dados['massa_corporal'])) $dados['massa_corporal'] = number_format($dados['massa_corporal'], 3, '.', '');
+        if (!empty($dados['imc'])) $dados['imc'] = number_format($dados['imc'], 2, '.', '');
+        if (!empty($dados['preensao_manual1'])) $dados['preensao_manual1'] = number_format($dados['preensao_manual1'], 3, '.', '');
+        if (!empty($dados['preensao_manual2'])) $dados['preensao_manual2'] = number_format($dados['preensao_manual2'], 3, '.', '');
+        if (!empty($dados['preensao_manual3'])) $dados['preensao_manual3'] = number_format($dados['preensao_manual3'], 3, '.', '');
         $prontuario->fill($dados);
         $prontuario->save();
 
@@ -117,9 +123,9 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             'estatura'                          => 'integer|nullable',
 
             //Força e Pressão Manual
-            'pressoa_manual1'                   => 'numeric|nullable',
-            'pressoa_manual2'                   => 'numeric|nullable',
-            'pressoa_manual3'                   => 'numeric|nullable',
+            'preensao_manual1'                   => 'numeric|nullable',
+            'preensao_manual2'                   => 'numeric|nullable',
+            'preensao_manual3'                   => 'numeric|nullable',
 
             //Hemodinâmica
             'pas'                               => 'integer|nullable',
@@ -135,6 +141,11 @@ class ProntuarioEducacaoFisicaController extends ApiController {
         $dados = $request->dados;
         $dados['usuario_id'] = $usuarioID;
         $dados['data'] = date('Y-m-d', strtotime($dados['data']));
+        if (!empty($dados['massa_corporal'])) $dados['massa_corporal'] = number_format($dados, 3, '.', '');
+        if (!empty($dados['imc'])) $dados['imc'] = number_format($dados, 2, '.', '');
+        if (!empty($dados['preensao_manual1'])) $dados['preensao_manual1'] = number_format($dados, 3, '.', '');
+        if (!empty($dados['preensao_manual2'])) $dados['preensao_manual2'] = number_format($dados, 3, '.', '');
+        if (!empty($dados['preensao_manual3'])) $dados['preensao_manual3'] = number_format($dados, 3, '.', '');
         $dados['aprovado'] = ($usuario->nivel_acesso == 1); //É professor
         
         $evolucao = EduFisEvolucao::create($dados);

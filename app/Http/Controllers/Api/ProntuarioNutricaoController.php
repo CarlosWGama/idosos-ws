@@ -17,7 +17,7 @@ class ProntuarioNutricaoController extends ApiController {
     /** Retorna o ultimo prontuário aprovado */
     public function buscarFicha(int $pacienteID) {
         $prontuario = NutProntuario::where('paciente_id', $pacienteID)->orderBy('id', 'desc')->first();
-        if (!$prontuario) $prontuario = new NutProntuario;
+        if (!$prontuario) $prontuario = new \stdClass();
         return response()->json(['prontuario' => $prontuario], 200);
     }
 

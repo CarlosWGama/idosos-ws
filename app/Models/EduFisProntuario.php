@@ -10,6 +10,8 @@ class EduFisProntuario extends Model {
 
    use SoftDeletes;
 
+   protected $table = 'edu_fis_prontuarios';
+
    //Não protege nenhum campo
    protected $guarded = [];
 

@@ -20,11 +20,11 @@ class CreateEduFisProntuariosTable extends Migration
             
             //Formulário
             $table->date('data');
-            $table->decimal('gricemia_capilar', 7, 2)->nullable();
+            $table->decimal('glicemia_capilar', 11, 2)->nullable();
             $table->integer('pressao_arterial')->nullable();
             $table->integer('frequencia_cardiaca')->nullable();
             $table->integer('saturacao')->nullable();
-            $table->decimal('temperatura', 4,2)->nullable();
+            $table->decimal('temperatura', 11,2)->nullable();
             $table->integer('pas_tornozelo_direito')->nullable();
             $table->integer('pas_tornozelo_esquerdo')->nullable();
             $table->integer('pas_braquial_direito')->nullable();
@@ -36,19 +36,19 @@ class CreateEduFisProntuariosTable extends Migration
             $table->integer('sentar_cadeira')->nullable();
             $table->integer('flexao_cotovelo')->nullable();
             $table->integer('sentar_pes')->nullable();
-            $table->integer('time_up_go')->nullable();
+            $table->integer('timed_up_go')->nullable();
             $table->integer('costas_maos')->nullable();
             $table->integer('caminhada')->nullable();
             
             //Antropometria
-            $table->decimal('massa_corporal', 6, 3)->nullable();
-            $table->decimal('imc', 4, 2)->nullable();
+            $table->decimal('massa_corporal', 11, 3)->nullable();
+            $table->decimal('imc', 11, 2)->nullable();
             $table->integer('estatura')->nullable();
 
             //Força e Pressão Manual
-            $table->decimal('pressoa_manual1', 5, 3)->nullable();
-            $table->decimal('pressoa_manual2', 5, 3)->nullable();
-            $table->decimal('pressoa_manual3', 5, 3)->nullable();
+            $table->decimal('preensao_manual1', 11, 3)->nullable();
+            $table->decimal('preensao_manual2', 11, 3)->nullable();
+            $table->decimal('preensao_manual3', 11, 3)->nullable();
             
             $table->softDeletes();
             $table->timestamps();

@@ -28,19 +28,19 @@ class CreateEduFisEvolucaosTable extends Migration
             $table->integer('sentar_cadeira')->nullable();
             $table->integer('flexao_cotovelo')->nullable();
             $table->integer('sentar_pes')->nullable();
-            $table->integer('time_up_go')->nullable();
+            $table->integer('timed_up_go')->nullable();
             $table->integer('costas_maos')->nullable();
             $table->integer('caminhada')->nullable();
             
             //Antropometria
-            $table->decimal('massa_corporal', 6, 3)->nullable();
-            $table->decimal('imc', 4, 2)->nullable();
+            $table->decimal('massa_corporal', 11, 3)->nullable();
+            $table->decimal('imc', 11, 2)->nullable();
             $table->integer('estatura')->nullable();
 
             //Força e Pressão Manual
-            $table->decimal('pressoa_manual1', 5, 3)->nullable();
-            $table->decimal('pressoa_manual2', 5, 3)->nullable();
-            $table->decimal('pressoa_manual3', 5, 3)->nullable();
+            $table->decimal('preensao_manual1', 11, 3)->nullable();
+            $table->decimal('preensao_manual2', 11, 3)->nullable();
+            $table->decimal('preensao_manual3', 11, 3)->nullable();
 
             //Hemodinâmica
             $table->integer('pas')->nullable();

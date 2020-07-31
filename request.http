@@ -208,7 +208,7 @@ Authorization: {{tokenProfessorEF}}
     "dados": {
 		"data": "2020-04-09",
 		"paciente_id": 1,
-		"gricemia_capilar": 100,
+		"glicemia_capilar": 100,
         "pressao_arterial": 120,
         "frequencia_cardiaca": 60,
         "saturacao": 80,
@@ -224,7 +224,7 @@ Authorization: {{tokenProfessorEF}}
         "sentar_cadeira": 10,
         "flexao_cotovelo": 12,
         "sentar_pes": 13,
-        "time_up_go": 14,
+        "timed_up_go": 14,
         "costas_maos": 15,
         "caminhada": 20,
             
@@ -234,52 +234,10 @@ Authorization: {{tokenProfessorEF}}
         "estatura": 164,
 
         //Força e Pressão Manual
-        "pressoa_manual1": 20,
-        "pressoa_manual2": 10,
-        "pressoa_manual3": 30
+        "preensao_manual1": 20,
+        "preensao_manual2": 10,
+        "preensao_manual3": 30
     }
-}
-
-###### PRONTUÁRIOS 
-@evolucaoID = 1
-### Buscar Evoluções (Inicio e Limite)
-GET {{baseUrl}}/prontuarios/educacao-fisica/evolucao/{{pacienteID}}/0/10
-Authorization: {{tokenProfessorEF}}
-
-### Cadatra uma nova evolução
-POST {{baseUrl}}/prontuarios/educacao-fisica/evolucao
-Content-Type: application/json
-Authorization: {{tokenAlunoEF}}
-
-{
-    "dados": {
-        "paciente_id": {{pacienteID}},
-        "data": "2020-07-27",
-
-		//Desempenho Funcional
-        "sentar_cadeira": 10,
-        "flexao_cotovelo": 12,
-        "sentar_pes": 13,
-        "time_up_go": 14,
-        "costas_maos": 15,
-        "caminhada": 20,
-            
-        //Antropometria
-        "massa_corporal": 60,
-        "imc": 21.5,
-        "estatura": 164,
-
-        //Força e Pressão Manual
-        "pressoa_manual1": 20,
-        "pressoa_manual2": 10,
-        "pressoa_manual3": 30,
-
-		//Hemodinâmica
-        "pas": 30,
-        "pad": 20,
-    	"fc": 10,
-		"conduta": "aaaaaa"
-    }   
 }
 
 ### Atualiza os dados de uma evolução
