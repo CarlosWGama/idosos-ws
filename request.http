@@ -59,6 +59,42 @@ Authorization: {{tokenProfessor}}
 
 
 #################################################################################
+###############                     NOTIFICAÇÃO                      ############
+#################################################################################
+### Retorna todas notificações do usuário
+GET {{baseUrl}}/notificacoes
+Content-Type: application/json
+Authorization: {{tokenProfessor}}
+
+### Marca uma notificação como lida
+GET {{baseUrl}}/notificacoes/nao-lidas
+Content-Type: application/json
+Authorization: {{tokenProfessor}}
+
+### Cadastra uma nova notificação
+POST {{baseUrl}}/notificacoes
+Content-Type: application/json
+Authorization: {{tokenProfessor}}
+
+{
+	"dados": {
+		"paciente_id": 1,
+		"area_id": 2,
+		"descricao": "Teste"
+	}
+}
+
+### Marca uma notificação como lida
+PUT {{baseUrl}}/notificacoes/1
+Content-Type: application/json
+Authorization: {{tokenProfessor}}
+
+### Deleta uma notificação
+DELETE {{baseUrl}}/notificacoes/1
+Content-Type: application/json
+Authorization: {{tokenProfessor}}
+
+#################################################################################
 ###############                     NUTRIÇÃO                      ###############
 #################################################################################
 @pacienteID = 1
@@ -208,7 +244,7 @@ Authorization: {{tokenProfessorEF}}
     "dados": {
 		"data": "2020-04-09",
 		"paciente_id": 1,
-		"glicemia_capilar": 100,
+		"glicemia_capilar": 1234567,
         "pressao_arterial": 120,
         "frequencia_cardiaca": 60,
         "saturacao": 80,

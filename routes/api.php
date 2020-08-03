@@ -39,7 +39,16 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/alunos', 'Api\UsuariosController@buscarAlunos');
         Route::put('/alunos/{id}', 'Api\UsuariosController@atualizarAluno');
         Route::delete('/alunos/{id}', 'Api\UsuariosController@excluirAluno');
-    }); 
+    });
+    
+    //Notificações
+    Route::group(['prefix' => 'notificacoes'], function () {
+        Route::post('/', 'Api\NotificacaoController@cadastrar');
+        Route::get('/', 'Api\NotificacaoController@buscarTodas');
+        Route::get('/nao-lidas', 'Api\NotificacaoController@totalNaoLidas');
+        Route::put('/{id}', 'Api\NotificacaoController@ler');
+        Route::delete('/{id}', 'Api\NotificacaoController@excluir');
+    });
 
     //Pacientes
     Route::group(['prefix' => 'pacientes'], function () {
