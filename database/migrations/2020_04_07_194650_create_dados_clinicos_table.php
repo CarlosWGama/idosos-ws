@@ -37,6 +37,13 @@ class CreateDadosClinicosTable extends Migration
             $table->tinyInteger('cf_transferir')->default(0)->comment('0 independente | 1 necessita de ajuda não humana |2 Dependência completa');
             $table->tinyInteger('cf_continencia')->default(0)->comment('0 Tem completo controle sobre suas eliminações |1 É parcial ou totalmente incontinente do intestino e bexiga ');
             $table->tinyInteger('cf_alimentar')->default(0)->comment('0 independente | 1 necessita de ajuda não humana |2 Dependência completa');
+            $table->string('exercicios_fisicos')->nullable();
+            $table->boolean('realizou_cirurgia')->default(false);
+            $table->string('cirurgia')->nullable();
+            $table->boolean('tem_limitacao_osteoarticular')->default(false);
+            $table->string('limitacao_osteoarticular')->nullable();
+            $table->boolean('tem_limitacao_musculoarticular')->default(false);
+            $table->string('limitacao_musculoarticular')->nullable();
             $table->softDeletes();
             $table->timestamps();
             // condicoes_clinicas?: number[],

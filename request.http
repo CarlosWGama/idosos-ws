@@ -44,6 +44,7 @@ Authorization: {{tokenProfessor}}
 		"foto": "assets/imgs/avatar.png",
 		"escolaridade": 2,
 		"tem_filhos": true,
+		"etnia": 1,
 		"estado_civil": 3,
 		"frequencia_familiar": 1,
 		"data_admissao": "2018-04-06T18:00:08.545-03:00",

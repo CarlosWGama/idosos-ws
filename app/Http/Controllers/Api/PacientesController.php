@@ -23,6 +23,7 @@ class PacientesController extends ApiController {
             'data_nascimento'       => 'required|date',
             'masculino'             => 'required|boolean',
             'escolaridade'          => 'required|integer',
+            'etnia'                 => 'required|integer',
             // 'tem_filhos'            => 'required|boolean',
             'estado_civil'          => 'required|integer',
             'frequencia_familiar'   => 'required|integer',
@@ -67,6 +68,7 @@ class PacientesController extends ApiController {
             'masculino'             => 'required|boolean',
             'escolaridade'          => 'required|integer',
             // 'tem_filhos'            => 'required|boolean',
+            'etnia'                 => 'required|integer',
             'estado_civil'          => 'required|integer',
             'frequencia_familiar'   => 'required|integer',
             'data_admissao'         => 'required|date',
@@ -148,7 +150,8 @@ class PacientesController extends ApiController {
             'cf_uso_banheiro'           => 'required|integer',
             'cf_transferir'             => 'required|integer',
             'cf_continencia'            => 'required|integer',
-            'cf_alimentar'              => 'required|integer'
+            'cf_alimentar'              => 'required|integer',
+            'realizou_cirurgia'         => 'required',
         ]);
 
         if ($validation->fails()) return response()->json($validation->errors(), 400);
