@@ -39,16 +39,9 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             
             //Ficha principal
             'glicemia_capilar'                  => 'nullable|numeric',
-            'pressao_arterial'                  => 'integer|nullable',
             'frequencia_cardiaca'               => 'integer|nullable',
             'saturacao'                         => 'integer|nullable',
             'temperatura'                       => 'numeric|nullable',
-            'pas_tornozelo_direito'             => 'integer|nullable',
-            'pas_tornozelo_esquerdo'            => 'integer|nullable',
-            'pas_braquial_direito'              => 'integer|nullable',
-            'pas_braquial_esquerdo'             => 'integer|nullable',
-            'indice_tornozelo_braquial_direito' => 'integer|nullable',
-            'indice_tornozelo_braquial_esquerdo'=> 'integer|nullable',
             
             //Desempenho Funcional
             'sentar_cadeira'                    => 'integer|nullable',

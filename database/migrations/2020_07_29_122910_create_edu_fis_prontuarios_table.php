@@ -21,16 +21,16 @@ class CreateEduFisProntuariosTable extends Migration
             //Formulário
             $table->date('data');
             $table->decimal('glicemia_capilar', 11, 2)->nullable();
-            $table->integer('pressao_arterial')->nullable();
+            $table->string('pressao_arterial')->nullable();
             $table->integer('frequencia_cardiaca')->nullable();
             $table->integer('saturacao')->nullable();
             $table->decimal('temperatura', 11,2)->nullable();
-            $table->integer('pas_tornozelo_direito')->nullable();
-            $table->integer('pas_tornozelo_esquerdo')->nullable();
-            $table->integer('pas_braquial_direito')->nullable();
-            $table->integer('pas_braquial_esquerdo')->nullable();
-            $table->integer('indice_tornozelo_braquial_direito')->nullable();
-            $table->integer('indice_tornozelo_braquial_esquerdo')->nullable();
+            $table->string('pas_tornozelo_direito')->nullable();
+            $table->string('pas_tornozelo_esquerdo')->nullable();
+            $table->string('pas_braquial_direito')->nullable();
+            $table->string('pas_braquial_esquerdo')->nullable();
+            $table->string('indice_tornozelo_braquial_direito')->nullable();
+            $table->string('indice_tornozelo_braquial_esquerdo')->nullable();
             
             //Desempenho Funcional
             $table->integer('sentar_cadeira')->nullable();
