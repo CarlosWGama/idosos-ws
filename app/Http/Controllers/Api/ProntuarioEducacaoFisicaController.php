@@ -224,11 +224,11 @@ class ProntuarioEducacaoFisicaController extends ApiController {
         $dados = $request->dados;
         $dados['usuario_id'] = $usuarioID;
         $dados['data'] = date('Y-m-d', strtotime($dados['data']));
-        if (!empty($dados['massa_corporal'])) $dados['massa_corporal'] = number_format($dados, 3, '.', '');
-        if (!empty($dados['imc'])) $dados['imc'] = number_format($dados, 2, '.', '');
-        if (!empty($dados['preensao_manual1'])) $dados['preensao_manual1'] = number_format($dados, 3, '.', '');
-        if (!empty($dados['preensao_manual2'])) $dados['preensao_manual2'] = number_format($dados, 3, '.', '');
-        if (!empty($dados['preensao_manual3'])) $dados['preensao_manual3'] = number_format($dados, 3, '.', '');
+        if (!empty($dados['massa_corporal'])) $dados['massa_corporal'] = number_format($dados['massa_corporal'], 3, '.', '');
+        if (!empty($dados['imc'])) $dados['imc'] = number_format($dados['imc'], 2, '.', '');
+        if (!empty($dados['preensao_manual1'])) $dados['preensao_manual1'] = number_format($dados['preensao_manual1'], 3, '.', '');
+        if (!empty($dados['preensao_manual2'])) $dados['preensao_manual2'] = number_format($dados['preensao_manual2'], 3, '.', '');
+        if (!empty($dados['preensao_manual3'])) $dados['preensao_manual3'] = number_format($dados['preensao_manual3'], 3, '.', '');
         $dados['aprovado'] = ($usuario->nivel_acesso == 1); //É professor
         
         $acompanhamento = EduFisAcompanhamento::create($dados);

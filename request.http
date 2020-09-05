@@ -317,6 +317,36 @@ Authorization: {{tokenProfessorEF}}
 ############# TESTE DE ACOMPANHAMENTO
 @acompanhamentoID = 1
 
+POST {{baseUrl}}/prontuarios/educacao-fisica/acompanhamentos
+Content-Type: application/json
+Authorization: {{tokenAlunoEF}}
+
+{ 
+	"dados": {
+		"caminhada": 10,
+		"conduta": "10",
+		"costas_maos": 10,
+		"data": "2020-09-05",
+		"estatura": 10,
+		"fc": 10,
+		"flexao_cotovelo": 10,
+		"id": null,
+		"imc": 10,
+		"massa_corporal": 10,
+		"paciente_id": 1,
+		"pad": 10,
+		"pas": 10,
+		"preensao_manual1": 10,
+		"preensao_manual2": 10,
+		"preensao_manual3": 10,
+		"sentar_cadeira": 10,
+		"sentar_pes": 10,
+		"timed_up_go": 10,
+		"usuario_id": 5
+	}
+}
+
+
 ### Atualiza os dados de uma evolução
 PUT {{baseUrl}}/prontuarios/educacao-fisica/acompanhamentos/{{acompanhamentoID}}
 Content-Type: application/json
