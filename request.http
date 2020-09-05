@@ -277,8 +277,48 @@ Authorization: {{tokenProfessorEF}}
     }
 }
 
+#############  EVOLUÇÃO
+@evolucaoID = 1
+### Buscar Evoluções (Inicio e Limite)
+GET {{baseUrl}}/prontuarios/educacao-fisica/evolucao/{{pacienteID}}/0/10
+Authorization: {{tokenProfessorEF}}
+
+### Cadatra uma nova evolução
+POST {{baseUrl}}/prontuarios/educacao-fisica/evolucao
+Authorization: {{tokenAlunoEF}}
+
+{
+    "dados": {
+        "paciente_id": {{pacienteID}},
+        "usuario_id": 4,
+        "data": "2020-07-27"
+    }   
+}
+
 ### Atualiza os dados de uma evolução
 PUT {{baseUrl}}/prontuarios/educacao-fisica/evolucao/{{evolucaoID}}
+Authorization: {{tokenAlunoEF}}
+
+{
+    "dados": {
+        "paciente_id": {{pacienteID}},
+        "usuario_id": 4,
+        "data": "2020-07-27"
+    }   
+}
+
+
+### Aprovar (ID Da evolução a ser aprovada)
+PUT {{baseUrl}}/prontuarios/educacao-fisica/evolucao/aprovacao/{{evolucaoID}}
+Authorization: {{tokenProfessorEF}}
+
+
+
+############# TESTE DE ACOMPANHAMENTO
+@acompanhamentoID = 1
+
+### Atualiza os dados de uma evolução
+PUT {{baseUrl}}/prontuarios/educacao-fisica/acompanhamentos/{{acompanhamentoID}}
 Content-Type: application/json
 Authorization: {{tokenAlunoEF}}
 
@@ -294,5 +334,5 @@ Authorization: {{tokenAlunoEF}}
 
 
 ### Aprovar (ID Da evolução a ser aprovada)
-PUT {{baseUrl}}/prontuarios/educacao-fisica/evolucao/aprovacao/{{evolucaoID}}
+PUT {{baseUrl}}/prontuarios/educacao-fisica/acompanhamentos/aprovacao/{{acompanhamentoID}}
 Authorization: {{tokenProfessorEF}}

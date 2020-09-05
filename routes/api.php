@@ -86,6 +86,12 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioEducacaoFisicaController@aprovarEvolucao');
             Route::put('/evolucao/{id}', 'Api\ProntuarioEducacaoFisicaController@atualizarEvolucao');
             Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEducacaoFisicaController@buscarEvolucoes');
+
+            //Teste de Acompanhamento
+            Route::post('/acompanhamentos', 'Api\ProntuarioEducacaoFisicaController@cadastrarAcompanhamento');
+            Route::put('/acompanhamentos/aprovacao/{id}', 'Api\ProntuarioEducacaoFisicaController@aprovarAcompanhamento');
+            Route::put('/acompanhamentos/{id}', 'Api\ProntuarioEducacaoFisicaController@atualizarAcompanhamento');
+            Route::get('/acompanhamentos/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEducacaoFisicaController@buscarAcompanhamentos');
         });
     });
 
