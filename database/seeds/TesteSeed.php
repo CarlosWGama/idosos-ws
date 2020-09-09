@@ -62,5 +62,13 @@ class TesteSeed extends Seeder
             'profissao_id' => 5,
             'nivel_acesso' => 3
         ]);
+
+        Usuario::create([
+            'nome'  => 'Fisio Professor',
+            'senha' => md5('123456'),
+            'admin' => false,
+            'profissao_id' => 4,
+            'nivel_acesso' => 1
+        ]);
     }
 }
