@@ -75,6 +75,19 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioNutricaoController@buscarEvolucoes');
         });
 
+        //Fisioterapia
+         Route::group(['prefix' => 'fisioterapia'], function () {
+            //Ficha
+            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioFisioterapiaController@buscarFicha');
+            Route::put('/ficha', 'Api\ProntuarioFisioterapiaController@salvarFicha');
+            
+            //Evoluções
+            Route::post('/evolucao', 'Api\ProntuarioFisioterapiaController@cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioFisioterapiaController@aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'Api\ProntuarioFisioterapiaController@atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioFisioterapiaController@buscarEvolucoes');
+        });
+
          //Educação Física
          Route::group(['prefix' => 'educacao-fisica'], function () {
             //Ficha
