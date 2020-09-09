@@ -56,6 +56,13 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             'massa_corporal'                    => 'numeric|nullable',
             'imc'                               => 'numeric|nullable',
             'estatura'                          => 'integer|nullable',
+            'perimetro_quadril'                 => 'integer|nullable',
+            'circuferencia_antebraco'           => 'integer|nullable',
+            'circuferencia_panturrilha'         => 'integer|nullable',
+            'altura_joelho'                     => 'integer|nullable',
+            'dobra_coxa'                        => 'integer|nullable',
+            'mma'                               => 'numeric|nullable',
+            'imma'                              => 'numeric|nullable',
 
             //Força e Pressão Manual
             'preensao_manual1'                   => 'numeric|nullable',
@@ -204,6 +211,13 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             'massa_corporal'                    => 'numeric|nullable',
             'imc'                               => 'numeric|nullable',
             'estatura'                          => 'integer|nullable',
+            'perimetro_quadril'                 => 'integer|nullable',
+            'circuferencia_antebraco'           => 'integer|nullable',
+            'circuferencia_panturrilha'         => 'integer|nullable',
+            'altura_joelho'                     => 'integer|nullable',
+            'dobra_coxa'                        => 'integer|nullable',
+            'mma'                               => 'numeric|nullable',
+            'imma'                              => 'numeric|nullable',
 
             //Força e Pressão Manual
             'preensao_manual1'                   => 'numeric|nullable',
@@ -269,6 +283,13 @@ class ProntuarioEducacaoFisicaController extends ApiController {
             'massa_corporal'                    => 'numeric|nullable',
             'imc'                               => 'numeric|nullable',
             'estatura'                          => 'integer|nullable',
+            'perimetro_quadril'                 => 'integer|nullable',
+            'circuferencia_antebraco'           => 'integer|nullable',
+            'circuferencia_panturrilha'         => 'integer|nullable',
+            'altura_joelho'                     => 'integer|nullable',
+            'dobra_coxa'                        => 'integer|nullable',
+            'mma'                               => 'numeric|nullable',
+            'imma'                              => 'numeric|nullable',
 
             //Força e Pressão Manual
             'pressoa_manual1'                   => 'numeric|nullable',

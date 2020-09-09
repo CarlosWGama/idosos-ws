@@ -36,6 +36,13 @@ class CreateTableEduFisAcompanhamentos extends Migration
             $table->decimal('massa_corporal', 11, 3)->nullable();
             $table->decimal('imc', 11, 2)->nullable();
             $table->integer('estatura')->nullable();
+            $table->integer('perimetro_quadril')->nullable();
+            $table->integer('circuferencia_antebraco')->nullable();
+            $table->integer('circuferencia_panturrilha')->nullable();
+            $table->integer('altura_joelho')->nullable();
+            $table->integer('dobra_coxa')->nullable();
+            $table->decimal('mma', 11, 2)->nullable();
+            $table->decimal('imma', 11, 2)->nullable();
 
             //Força e Pressão Manual
             $table->decimal('preensao_manual1', 11, 3)->nullable();
