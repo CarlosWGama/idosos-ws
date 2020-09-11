@@ -9,7 +9,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-		"codigo": 2,
+		"codigo": 8,
 		"senha":"123456"
 }
 
@@ -366,3 +366,12 @@ Authorization: {{tokenAlunoEF}}
 ### Aprovar (ID Da evolução a ser aprovada)
 PUT {{baseUrl}}/prontuarios/educacao-fisica/acompanhamentos/aprovacao/{{acompanhamentoID}}
 Authorization: {{tokenProfessorEF}}
+
+
+##################################################################
+######                   FISIOTERAPIA                          ###
+##################################################################
+
+@tokenProfessorFisio = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OH0.P7RDFFrN9l1XL_lCc7ZnRD2Espy99iHyCg-qRn720Iw
+GET {{baseUrl}}/prontuarios/fisioterapia/ficha/1 
+Authorization: {{tokenProfessorFisio}}

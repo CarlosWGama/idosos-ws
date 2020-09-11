@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\FisioEvolucao;
+use App\Models\FisioProntuario;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Validator;
 
-class ProntuarioFisioterapiaController extends Controller {
+class ProntuarioFisioterapiaController extends ApiController {
     
     protected $areaID = 4;
 
@@ -68,8 +72,8 @@ class ProntuarioFisioterapiaController extends Controller {
             'amplitude_articular_fratura'   => 'boolean|nullable', 
             'amplitude_articular_desvio'    => 'boolean|nullable', 
             
-            //Deambutação
-            'deambutacao'                   => 'integer|nullable', 
+            //Deambulação
+            'deambulacao'                   => 'integer|nullable', 
             'equilibrio'                    => 'integer|nullable', 
             'edema_grau'                    => 'integer|nullable', 
             'aparelho_genitourinario'       => 'integer|nullable'
@@ -85,11 +89,6 @@ class ProntuarioFisioterapiaController extends Controller {
 
         $prontuario->fill($dados);
         $prontuario->save();
-
-        //Saude Gastroinstestinal
-        $prontuario->saudeGastrointestinal()->sync($request->dados['saude_gastrointestinal']); 
-        //Membro amputado
-        $prontuario->membroAmputado()->sync($request->dados['membro_amputado']);
 
         $prontuario->save();
         return response()->json($prontuario, 200);

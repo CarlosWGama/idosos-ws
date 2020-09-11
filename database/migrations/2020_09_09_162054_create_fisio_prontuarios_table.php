@@ -72,7 +72,7 @@ class CreateFisioProntuariosTable extends Migration {
             $table->string('amplitude_articular_desvio_obs')->nullable();
             
             //Deambutação
-            $table->integer('deambutacao')->nullable()->comment('1 - Livre  | 2 - bengala  | 3 - andador  | 4 - cadeira de rodas | 5 -  leito  ');
+            $table->integer('deambulacao')->nullable()->comment('1 - Livre  | 2 - bengala  | 3 - andador  | 4 - cadeira de rodas | 5 -  leito  ');
             $table->string('marcha')->nullable();
             $table->integer('equilibrio')->nullable()->comment('1 - normal  | 2 - anormal ');
             $table->string('equilibrio_anormal')->nullable();
@@ -81,9 +81,14 @@ class CreateFisioProntuariosTable extends Migration {
             $table->string('edema_tipo')->nullable();
             $table->integer('edema_grau')->nullable();
             $table->string('sequelas')->nullable();
+            $table->integer('aparelho_digestorio')->nullable()->comment('1 - continência   | 2 - incontinência fecal | 3 - obstipação  ');
+            $table->string('aparelho_digestorio_observacao')->nullable();
+            $table->integer('abdomen')->nullable()->comment('1 - normal   | 2 - rigido | 3 - flácido | 4 - distendido | 5 - Doloroso  ');
+            $table->string('abdomen_observacao')->nullable();
             $table->integer('aparelho_genitourinario')->nullable()->comment('1 - contigência  | 2 - incontigência | 3 - Função sexual ');
-            $table->string('aparelho_genitourinario_incontigencia')->nullable();
-            $table->string('aparelho_genitourinario_funcao_sexual')->nullable();
+            $table->string('aparelho_genitourinario_observacao')->nullable();
+            $table->boolean('aparelho_genitourinario_funcao_sexual')->default(false);
+            $table->string('aparelho_genitourinario_funcao_sexual_observacao')->nullable();
 
             //Final
             $table->text('diagnostico_fisioterapeutico')->nullable();
