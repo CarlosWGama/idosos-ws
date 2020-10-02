@@ -9,7 +9,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-		"codigo": 8,
+		"codigo": 9,
 		"senha":"123456"
 }
 
@@ -375,3 +375,11 @@ Authorization: {{tokenProfessorEF}}
 @tokenProfessorFisio = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OH0.P7RDFFrN9l1XL_lCc7ZnRD2Espy99iHyCg-qRn720Iw
 GET {{baseUrl}}/prontuarios/fisioterapia/ficha/1 
 Authorization: {{tokenProfessorFisio}}
+
+##################################################################
+######                   ODONTOLOGIA                          ###
+##################################################################
+
+@tokenProfessorOdonto = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OX0.vF7s9th--dBZbyYthTXeHsBl2M8nSsx105dLlupoqf0
+GET {{baseUrl}}/prontuarios/odontologia/evolucao/{{pacienteID}}/0/10
+Authorization: {{tokenProfessorOdonto}}

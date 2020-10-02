@@ -75,6 +75,19 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioNutricaoController@buscarEvolucoes');
         });
 
+        //Odontologia
+        Route::group(['prefix' => 'odontologia'], function () {
+            //Ficha
+            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioOdontologiaController@buscarFicha');
+            Route::put('/ficha', 'Api\ProntuarioOdontologiaController@salvarFicha');
+            
+            //Evoluções
+            Route::post('/evolucao', 'Api\ProntuarioOdontologiaController@cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioOdontologiaController@aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'Api\ProntuarioOdontologiaController@atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioOdontologiaController@buscarEvolucoes');
+        });
+
         //Fisioterapia
          Route::group(['prefix' => 'fisioterapia'], function () {
             //Ficha
