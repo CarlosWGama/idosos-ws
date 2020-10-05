@@ -37,6 +37,6 @@ class CreateOdontoEvolucaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('odonto_evolucaos');
+        Schema::dropIfExists('odonto_evolucao');
     }
 }

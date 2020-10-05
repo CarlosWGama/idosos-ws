@@ -83,14 +83,13 @@ class ProntuarioFisioterapiaController extends ApiController {
         if ($validation->fails()) return response()->json($validation->errors(), 400);
 
         //Cadastra
-        $dados = $request->except(['dados.saude_gastrointestinal', 'dados.membro_amputado', 'dados.id'])['dados'];
+        $dados = $request->except(['dados.id'])['dados'];
 
         $dados['data'] = date('Y-m-d', strtotime($dados['data']));
 
         $prontuario->fill($dados);
         $prontuario->save();
 
-        $prontuario->save();
         return response()->json($prontuario, 200);
     }
 

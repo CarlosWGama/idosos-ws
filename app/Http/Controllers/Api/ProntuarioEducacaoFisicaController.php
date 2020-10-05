@@ -87,7 +87,6 @@ class ProntuarioEducacaoFisicaController extends ApiController {
         $prontuario->fill($dados);
         $prontuario->save();
 
-        $prontuario->save();
         return response()->json($prontuario, 200);
     }
 
