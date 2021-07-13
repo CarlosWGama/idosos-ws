@@ -119,6 +119,25 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::put('/acompanhamentos/{id}', 'Api\ProntuarioEducacaoFisicaController@atualizarAcompanhamento');
             Route::get('/acompanhamentos/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEducacaoFisicaController@buscarAcompanhamentos');
         });
+
+          //Educação Física
+          Route::group(['prefix' => 'enfermagem'], function () {
+            //Ficha
+            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioEnfermagemController@buscarFicha');
+            Route::put('/ficha', 'Api\ProntuarioEnfermagemController@salvarFicha');
+            
+            //Evoluções
+            Route::post('/evolucao', 'Api\ProntuarioEnfermagemController@cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioEnfermagemController@aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'Api\ProntuarioEnfermagemController@atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEnfermagemController@buscarEvolucoes');
+
+            //Teste de Consulta Clinica
+            Route::post('/consulta-clinica', 'Api\ProntuarioEnfermagemController@cadastrarConsultaClinica');
+            Route::put('/consulta-clinica/aprovacao/{id}', 'Api\ProntuarioEnfermagemController@aprovarConsultaClinica');
+            Route::put('/consulta-clinica/{id}', 'Api\ProntuarioEnfermagemController@atualizarConsultaClinica');
+            Route::get('/consulta-clinica/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEnfermagemController@buscarConsultaClinica');
+        });
     });
 
     //Medicamentos

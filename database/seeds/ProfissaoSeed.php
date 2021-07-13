@@ -17,6 +17,7 @@ class ProfissaoSeed extends Seeder
             ['id' => 3, 'nome'  => 'Dentista',                          'exibir'=>true],
             ['id' => 4, 'nome'  => 'Fisioterapeuta',                    'exibir'=>true],
             ['id' => 5, 'nome'  => 'Profissional de Educação Física',   'exibir'=>true],
+            ['id' => 6, 'nome'  => 'Profissional de Enfermagem',        'exibir'=>true],
         ]);
     }
 }

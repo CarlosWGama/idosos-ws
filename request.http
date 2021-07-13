@@ -9,7 +9,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-		"codigo": 9,
+		"codigo": 10,
 		"senha":"123456"
 }
 
@@ -383,3 +383,50 @@ Authorization: {{tokenProfessorFisio}}
 @tokenProfessorOdonto = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OX0.vF7s9th--dBZbyYthTXeHsBl2M8nSsx105dLlupoqf0
 GET {{baseUrl}}/prontuarios/odontologia/evolucao/{{pacienteID}}/0/10
 Authorization: {{tokenProfessorOdonto}}
+
+##################################################################
+######                   ENFERMAGEM                            ###
+##################################################################
+@tokenProfessorEnfermagem = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTB9.mY69PdO3k0ZN4FAG2ECnRmZsYFx9PVLUQs5Bg6QbE7k
+
+GET {{baseUrl}}/prontuarios/enfermagem/evolucao/{{pacienteID}}/0/10
+Authorization: {{tokenProfessorEnfermagem}}
+
+###
+PUT {{baseUrl}}/prontuarios/enfermagem/ficha
+Authorization: {{tokenProfessorEnfermagem}}
+Content-Type: application/json
+
+{
+	"dados": {
+		"id": null,
+		"data": "2021-07-13",
+		"estatura": 11,
+		"perimetro_braquial": 22,
+		"osteoporose": false,
+		"demencia": true,
+		"demencia_qual": "123123",
+		"nutricao": true,
+		"nutricao_qual": "dasdasd",
+		"visao": false,
+		"visao_qual": null,
+		"audicao": false,
+		"audicao_qual": null,
+		"incontinencia": false,
+		"incontinencia_qual": null,
+		"depressao": false,
+		"depressao_qual": null,
+		"depressao_data": null,
+		"cognicao": false,
+		"cognicao_qual": null,
+		"mmss": true,
+		"mmss_qual": "weqwe",
+		"mmss_data": "2019-07-13T19:08:28.542-03:00",
+		"mmii": false,
+		"mmii_qual": null,
+		"mmii_data": null,
+		"queda": true,
+		"queda_data": "2019-07-13T19:08:36.924-03:00",
+		"paciente_id": 1
+	}
+}

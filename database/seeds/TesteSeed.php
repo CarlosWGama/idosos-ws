@@ -83,5 +83,14 @@ class TesteSeed extends Seeder
             'profissao_id' => 3,
             'nivel_acesso' => 1
         ]);
+        //Enfermagem
+        //10
+        Usuario::create([
+            'nome'  => 'Enfermagen Professor',
+            'senha' => md5('123456'),
+            'admin' => false,
+            'profissao_id' => 6,
+            'nivel_acesso' => 1
+        ]);
     }
 }
