@@ -133,6 +133,7 @@ class PacientesController extends ApiController {
         $validation = Validator::make($request->dados, [
             'plano'                     => 'required',
             'cartao_sus'                => 'required',
+            'cartao_sus_numero'         => 'nullable|integer',
             'fumante'                   => 'required',
             'fumante_idade'             => 'nullable|integer',
             'fumante_media_cigarros'    => 'nullable|integer',
@@ -146,6 +147,7 @@ class PacientesController extends ApiController {
             'medicamento_continuo'      => 'required|boolean',
             'atividade_recreativa'      => 'required|boolean',
             'cf_banhar'                 => 'required|integer',
+            'cf_acamado'                => 'required|integer',
             'cf_vestir'                 => 'required|integer',
             'cf_uso_banheiro'           => 'required|integer',
             'cf_transferir'             => 'required|integer',
