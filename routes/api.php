@@ -151,5 +151,13 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::delete('/{id}', 'Api\MedicamentosController@excluir');
         
     });
+    
+    //Exames Laboratoriais
+    Route::group(['prefix' => 'exames-laboratoriais'], function () {
+            Route::get('/{pacienteID}', 'Api\ExamesLaboratoriaisController@buscar');
+            Route::post('', 'Api\ExamesLaboratoriaisController@cadastrar');
+            Route::put('/{id}', 'Api\ExamesLaboratoriaisController@atualizar');
+            Route::delete('/{id}', 'Api\ExamesLaboratoriaisController@excluir');
+    });
 
 });
