@@ -136,7 +136,7 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::post('/consulta-clinica', 'Api\ProntuarioEnfermagemController@cadastrarConsultaClinica');
             Route::put('/consulta-clinica/aprovacao/{id}', 'Api\ProntuarioEnfermagemController@aprovarConsultaClinica');
             Route::put('/consulta-clinica/{id}', 'Api\ProntuarioEnfermagemController@atualizarConsultaClinica');
-            Route::get('/consulta-clinica/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEnfermagemController@buscarConsultaClinica');
+            Route::get('/consulta-clinica/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEnfermagemController@buscarConsultasClinicas');
         });
     });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\EnfermagemProntuario;
 use App\Http\Controllers\Controller;
+use App\Models\EnfermagemConsultaClinica;
 use App\Models\EnfermagemEvolucao;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
@@ -155,151 +156,107 @@ class ProntuarioEnfermagemController extends ApiController
         return response()->json('Atualizado com sucesso', 200);
     }
 
-    // =========================== TESTE DE ACOMPANHAMENTO =============================== //
-    /** Busca os testes de acompanhamento */
-    public function buscarConsultaClinicas(Request $request, int $pacienteID, int $inicio = 0, int $limite = 10) {
-        // $evolucoes = EnfermagemConsultaClinica::where('paciente_id', $pacienteID)->offset($inicio)->limit($limite)->orderBy('id', 'desc')->get();
-        // return response()->json(['acompanhamentos' => $evolucoes], 200);
+    // =========================== CONSULTA CLINICA =============================== //
+    /** Busca os consultas clinicas */
+    public function buscarConsultasClinicas(Request $request, int $pacienteID, int $inicio = 0, int $limite = 10) {
+        $consultas = EnfermagemConsultaClinica::where('paciente_id', $pacienteID)->offset($inicio)->limit($limite)->orderBy('id', 'desc')->get();
+        return response()->json(['consultas' => $consultas], 200);
     }
     
-    /** Cadastra um teste de acompanhamento */
+    /** Cadastra um consulta clinica */
     public function cadastrarConsultaClinica(Request $request) {
-        // $usuarioID = $this->getUsuarioID($request);
-        // $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
+        $usuarioID = $this->getUsuarioID($request);
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
 
-        // if ($usuario->profissao_id != $this->areaID)
-        //     return response()->json(['Apenas profissionais de educação física podem criar esse tipo de teste de acompanhamento'], 403);
+        if ($usuario->profissao_id != $this->areaID)
+            return response()->json(['Apenas profissionais de enfermagem podem criar esse tipo de consulta clinica'], 403);
 
-        // $validation = Validator::make($request->dados, [
-        //     'paciente_id'    => 'required|integer',
-        //     'data'           => 'required',
+        $validation = Validator::make($request->dados, [
+            'paciente_id'    => 'required|integer',
+            'data'           => 'required',
 
-        //     //Desempenho Funcional
-        //     'sentar_cadeira'                    => 'integer|nullable',
-        //     'flexao_cotovelo'                   => 'integer|nullable',
-        //     'sentar_pes'                        => 'integer|nullable',
-        //     'time_up_go'                        => 'integer|nullable',
-        //     'costas_maos'                       => 'integer|nullable',
-        //     'caminhada'                         => 'integer|nullable',
-            
-        //     //Antropometria
-        //     'massa_corporal'                    => 'numeric|nullable',
-        //     'imc'                               => 'numeric|nullable',
-        //     'estatura'                          => 'integer|nullable',
-        //     'perimetro_quadril'                 => 'integer|nullable',
-        //     'circuferencia_antebraco'           => 'integer|nullable',
-        //     'circuferencia_panturrilha'         => 'integer|nullable',
-        //     'altura_joelho'                     => 'integer|nullable',
-        //     'dobra_coxa'                        => 'integer|nullable',
-        //     'mma'                               => 'numeric|nullable',
-        //     'imma'                              => 'numeric|nullable',
-
-        //     //Força e Pressão Manual
-        //     'preensao_manual1'                   => 'numeric|nullable',
-        //     'preensao_manual2'                   => 'numeric|nullable',
-        //     'preensao_manual3'                   => 'numeric|nullable',
-
-        //     //Hemodinâmica
-        //     'pas'                               => 'integer|nullable',
-        //     'pad'                               => 'integer|nullable',
-        //     'fc'                                => 'integer|nullable'
-
-
-        // ]);
-
-        // if ($validation->fails()) return response()->json($validation->errors(), 400);
-
-        // //Cadastra
-        // $dados = $request->dados;
-        // $dados['usuario_id'] = $usuarioID;
-        // $dados['data'] = date('Y-m-d', strtotime($dados['data']));
-        // if (!empty($dados['massa_corporal'])) $dados['massa_corporal'] = number_format($dados['massa_corporal'], 3, '.', '');
-        // if (!empty($dados['imc'])) $dados['imc'] = number_format($dados['imc'], 2, '.', '');
-        // if (!empty($dados['preensao_manual1'])) $dados['preensao_manual1'] = number_format($dados['preensao_manual1'], 3, '.', '');
-        // if (!empty($dados['preensao_manual2'])) $dados['preensao_manual2'] = number_format($dados['preensao_manual2'], 3, '.', '');
-        // if (!empty($dados['preensao_manual3'])) $dados['preensao_manual3'] = number_format($dados['preensao_manual3'], 3, '.', '');
-        // $dados['aprovado'] = ($usuario->nivel_acesso == 1); //É professor
+            //Consulta
+            'peso'                          => 'numeric|nullable',
+            'imc'                           => 'numeric|nullable',
+            'alteracao_pes'                 => 'boolean|nullable',
+            'alteracao_fisico'              => 'boolean|nullable',
+            'fragilidade'                   => 'boolean|nullable',
+            'orientacao_nutricional'        => 'boolean|nullable',
+            'orientacao_atividade_fisica'   => 'boolean|nullable',
         
-        // $acompanhamento = EnfermagemConsultaClinica::create($dados);
-        // return response()->json($acompanhamento, 200);
+        ]);
+
+        if ($validation->fails()) return response()->json($validation->errors(), 400);
+
+        //Cadastra
+        $dados = $request->dados;
+        $dados['usuario_id'] = $usuarioID;
+        $dados['data'] = date('Y-m-d', strtotime($dados['data']));
+        if (!empty($dados['peso'])) $dados['peso'] = number_format($dados['peso'], 3, '.', '');
+        if (!empty($dados['imc'])) $dados['imc'] = number_format($dados['imc'], 2, '.', '');
+        $dados['aprovado'] = ($usuario->nivel_acesso == 1); //É professor
+        
+        $consulta = EnfermagemConsultaClinica::create($dados);
+        return response()->json($consulta, 200);
     }
 
     /** Atualiza um Teste de Consulta Clinica */
-    public function atualizarConsultaClinica(Request $request, int $acompanhamentoID) {
-        // $usuarioID = $this->getUsuarioID($request);
-        // $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
+    public function atualizarConsultaClinica(Request $request, int $consultaID) {
+        $usuarioID = $this->getUsuarioID($request);
+        $usuario = Usuario::where('id', $usuarioID)->where('deletado', false)->firstOrFail();
 
-        // $acompanhamento = EnfermagemConsultaClinica::findOrFail($acompanhamentoID);
+        $consulta = EnfermagemConsultaClinica::findOrFail($consultaID);
 
-        // //Não é da area
-        // if ($usuario->profissao_id != $this->areaID)
-        //     return response()->json(['Apenas profissionais de educação física podem criar esse tipo de acompanhamento'], 403);
+        //Não é da area
+        if ($usuario->profissao_id != $this->areaID)
+            return response()->json(['Apenas profissionais de educação física podem criar esse tipo de consulta'], 403);
             
-        // //Caso seja aluno, só pode alterar sua própria evolução
-        // if ($usuario->nivel_acesso == 3 && $acompanhamento->usuario_id != $usuario->id)
-        //     return response()->json(['Você só pode editar seus próprios testes de acompanhamento'], 403);
+        //Caso seja aluno, só pode alterar sua própria evolução
+        if ($usuario->nivel_acesso == 3 && $consulta->usuario_id != $usuario->id)
+            return response()->json(['Você só pode editar seus próprios consultas clinicas'], 403);
             
-        // //Evoluções aprovadas apenas podem ser alteradas por profesosres
-        // if ($acompanhamento->aprovado && $usuario->nivel_acesso != 1)
-        //     return response()->json(['Teste de ConsultaClinica aprovados, apenas podem ser alteradas por professores'], 403);
+        //Evoluções aprovadas apenas podem ser alteradas por profesosres
+        if ($consulta->aprovado && $usuario->nivel_acesso != 1)
+            return response()->json(['Teste de ConsultaClinica aprovados, apenas podem ser alteradas por professores'], 403);
           
-        // //Validação
-        // $validation = Validator::make($request->dados, [
-        //     'data'                              => 'required',
-        //     //Desempenho Funcional
-        //     'sentar_cadeira'                    => 'integer|nullable',
-        //     'flexao_cotovelo'                   => 'integer|nullable',
-        //     'sentar_pes'                        => 'integer|nullable',
-        //     'time_up_go'                        => 'integer|nullable',
-        //     'costas_maos'                       => 'integer|nullable',
-        //     'caminhada'                         => 'integer|nullable',
-            
-        //     //Antropometria
-        //     'massa_corporal'                    => 'numeric|nullable',
-        //     'imc'                               => 'numeric|nullable',
-        //     'estatura'                          => 'integer|nullable',
-        //     'perimetro_quadril'                 => 'integer|nullable',
-        //     'circuferencia_antebraco'           => 'integer|nullable',
-        //     'circuferencia_panturrilha'         => 'integer|nullable',
-        //     'altura_joelho'                     => 'integer|nullable',
-        //     'dobra_coxa'                        => 'integer|nullable',
-        //     'mma'                               => 'numeric|nullable',
-        //     'imma'                              => 'numeric|nullable',
+        //Validação
+        $validation = Validator::make($request->dados, [
+            'data'                              => 'required',
+            //Consulta
+            'peso'                          => 'numeric|nullable',
+            'imc'                           => 'numeric|nullable',
+            'alteracao_pes'                 => 'boolean|nullable',
+            'alteracao_fisico'              => 'boolean|nullable',
+            'fragilidade'                   => 'boolean|nullable',
+            'orientacao_nutricional'        => 'boolean|nullable',
+            'orientacao_atividade_fisica'   => 'boolean|nullable',
+        ]);
 
-        //     //Força e Pressão Manual
-        //     'pressoa_manual1'                   => 'numeric|nullable',
-        //     'pressoa_manual2'                   => 'numeric|nullable',
-        //     'pressoa_manual3'                   => 'numeric|nullable',
+        if ($validation->fails()) return response()->json($validation->errors(), 400);
 
-        //     //Hemodinâmica
-        //     'pas'                               => 'integer|nullable',
-        //     'pad'                               => 'integer|nullable',
-        //     'fc'                                => 'integer|nullable'
-        // ]);
+        //Atualiza
+        $dados = $request->except(['dados.id', 'dados.usuario_id'])['dados'];
+        $dados['data'] = date('Y-m-d', strtotime($dados['data']));
+        if (!empty($dados['peso'])) $dados['peso'] = number_format($dados['peso'], 3, '.', '');
+        if (!empty($dados['imc'])) $dados['imc'] = number_format($dados['imc'], 2, '.', '');
+        $consulta->fill($dados);
+        $consulta->save();
 
-        // if ($validation->fails()) return response()->json($validation->errors(), 400);
-
-        // //Atualiza
-        // $dados = $request->except(['dados.id', 'dados.usuario_id'])['dados'];
-        // $dados['data'] = date('Y-m-d', strtotime($dados['data']));
-        // $acompanhamento->fill($dados);
-        // $acompanhamento->save();
-
-        // return response()->json($acompanhamento, 200);
+        return response()->json($consulta, 200);
     }
     
-    /** Aprova um teste de acompanhamento */
+    /** Aprova um consulta clinica */
     public function aprovarConsultaClinica(Request $request, int $id) {
-        // $usuarioID = $this->getUsuarioID($request);
-        // //Acesso negado para aluno
-        // if (!$this->validaAcesso($usuarioID, [1])) 
-        //     return response()->json('Só professor da área pode aprovar prontuário', 403);
+        $usuarioID = $this->getUsuarioID($request);
+        //Acesso negado para aluno
+        if (!$this->validaAcesso($usuarioID, [1])) 
+            return response()->json('Só professor da área pode aprovar consulta', 403);
     
-        // $acompanhamento = EnfermagemConsultaClinica::where('id', $id)->firstOrFail();
+        $consulta = EnfermagemConsultaClinica::where('id', $id)->firstOrFail();
         
-        // $acompanhamento->aprovado = true;
-        // $acompanhamento->save();
+        $consulta->aprovado = true;
+        $consulta->save();
 
-        // return response()->json('Atualizado com sucesso', 200);
+        return response()->json('Atualizado com sucesso', 200);
     }
 }

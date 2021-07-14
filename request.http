@@ -430,3 +430,7 @@ Content-Type: application/json
 		"paciente_id": 1
 	}
 }
+
+### Consulta Clinica
+GET {{baseUrl}}/prontuarios/enfermagem/consulta-clinica/1/0/10
+Authorization: {{tokenProfessorEnfermagem}}
