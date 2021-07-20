@@ -59,6 +59,14 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/dados-clinicos/{id}', 'Api\PacientesController@dadosClinicos');
     });
 
+    //Estoque
+    Route::group(['prefix' => 'estoque'], function () {
+        Route::get('/{tipo}/{inicio?}/{limite?}', 'Api\EstoqueFarmacia@buscar');
+        Route::post('/{tipo}', 'Api\EstoqueFarmacia@cadastrar');
+        Route::put('/{tipo}/{id}', 'Api\EstoqueFarmacia@atualizar');
+        Route::delete('/{tipo}/{id}', 'Api\EstoqueFarmacia@excluir');
+    });
+
     //Prontuarios
     Route::group(['prefix' => 'prontuarios'], function () {
         
