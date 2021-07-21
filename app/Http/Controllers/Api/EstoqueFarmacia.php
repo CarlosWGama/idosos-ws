@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FarmaciaMaterial;
 use App\Models\FarmaciaRemedio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EstoqueFarmacia extends ApiController {
 
@@ -35,6 +36,7 @@ class EstoqueFarmacia extends ApiController {
 
         $validation = Validator::make($request->dados, [           
             'nome'                       => 'required',
+            'forma_farmaceutica'         => 'integer|nullable',
             'quantidade'                 => 'integer|nullable',
             'saida'                      => 'integer|nullable',
         ]);
@@ -60,8 +62,8 @@ class EstoqueFarmacia extends ApiController {
                
         //Validação
         $validation = Validator::make($request->dados, [
-            //Remédio
             'nome'                       => 'required',
+            'forma_farmaceutica'         => 'integer|nullable',
             'quantidade'                 => 'integer|nullable',
             'saida'                      => 'integer|nullable',
         ]);

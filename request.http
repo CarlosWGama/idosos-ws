@@ -9,7 +9,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-		"codigo": 10,
+		"codigo": 11,
 		"senha":"123456"
 }
 
@@ -434,3 +434,52 @@ Content-Type: application/json
 ### Consulta Clinica
 GET {{baseUrl}}/prontuarios/enfermagem/consulta-clinica/1/0/10
 Authorization: {{tokenProfessorEnfermagem}}
+
+
+##############################################
+### FARMACIA #########
+################################################
+
+@tokenFarmacia = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTF9.vN1NYhbpwgq2QeL1FlAj6V_mvtj3owuMc465Q10UAWk
+@tipo = remedio
+
+### CONSULTA
+GET {{baseUrl}}/estoque/{{tipo}}
+Authorization: {{tokenFarmacia}}
+
+
+### CADASTRO
+POST {{baseUrl}}/estoque/{{tipo}}/
+Authorization: {{tokenFarmacia}}
+Content-Type: application/json
+
+{
+	"dados": {
+		"nome": "Produto A",
+		"forma_farmaceutica": "1",
+		"dosagem": "3 gotas",
+		"quantidade": "10",
+		"validade": "20/07/2020",
+		"saida": "5"
+	}
+}
+
+### ATUALIZAR
+PUT {{baseUrl}}/estoque/{{tipo}}/1
+Authorization: {{tokenFarmacia}}
+Content-Type: application/json
+
+{
+	"dados": {
+		"nome": "Produto A",
+		"forma_farmaceutica": "1",
+		"dosagem": "3 gotas",
+		"quantidade": "10",
+		"validade": "20/07/2020",
+		"saida": "4"
+	}
+}
+
+### REMOVER
+DELETE {{baseUrl}}/estoque/{{tipo}}/1
+Authorization: {{tokenFarmacia}}

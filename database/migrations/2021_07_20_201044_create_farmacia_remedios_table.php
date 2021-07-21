@@ -16,6 +16,7 @@ class CreateFarmaciaRemediosTable extends Migration
         Schema::create('farmacia_remedios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
+            $table->integer('forma_farmaceutica')->comment('1 - Liquido |2 -  Comprimido | 3 - Capsula | 4 -  Pomada | 5 -  Injetável');
             $table->string('dosagem');
             $table->date('validade');
             $table->integer('quantidade');
