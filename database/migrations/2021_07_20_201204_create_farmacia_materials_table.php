@@ -16,8 +16,8 @@ class CreateFarmaciaMaterialsTable extends Migration
         Schema::create('farmacia_materiais', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->integer('quantidade');
-            $table->integer('saida');
+            $table->integer('quantidade')->nullable();
+            $table->integer('saida')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

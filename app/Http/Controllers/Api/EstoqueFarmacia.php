@@ -20,17 +20,17 @@ class EstoqueFarmacia extends ApiController {
     // =========================== PRODUTOS =============================== //
     /** 
      * Busca os produtos
-     * @param $tipo = remedio ou material
+     * @param $tipo = remedios ou materiais
      */
     public function buscar(Request $request, string $tipo,  int $inicio = 0, int $limite = 10) {
-        $model = ($tipo == 'remedio' ? FarmaciaRemedio::query() : FarmaciaMaterial::query());
-        $produtos =  $model->offset($inicio)->limit($limite)->orderBy('nome', 'desc')->get();
+        $model = ($tipo == 'remedios' ? FarmaciaRemedio::query() : FarmaciaMaterial::query());
+        $produtos =  $model->offset($inicio)->limit($limite)->orderBy('nome', 'asc')->get();
         return response()->json(['produtos' => $produtos], 200);
     }
     
     /** 
      * Cadastra Produto
-     * @param $tipo => remedio ou material
+     * @param $tipo => remedios ou materiais
      */
     public function cadastrar(Request $request, string $tipo) {
 
@@ -47,17 +47,17 @@ class EstoqueFarmacia extends ApiController {
         $dados = $request->dados;
         if (!empty($dados['validade'])) $dados['validade'] = date('Y-m-d', strtotime($dados['validade']));
         
-        $produto = ($tipo == 'remedio' ? FarmaciaRemedio::create($dados) : FarmaciaMaterial::create($dados));
+        $produto = ($tipo == 'remedios' ? FarmaciaRemedio::create($dados) : FarmaciaMaterial::create($dados));
         return response()->json($produto, 200);
     }
 
     /** 
      * Atualiza produto
-     * @param $tipo = remedio ou material 
+     * @param $tipo = remedios ou materiais 
      */
     public function atualizar(Request $request, string $tipo, int $produtoID) {
         //Seleciona o Model
-        $model = ($tipo == 'remedio' ? FarmaciaRemedio::query() : FarmaciaMaterial::query());
+        $model = ($tipo == 'remedios' ? FarmaciaRemedio::query() : FarmaciaMaterial::query());
         $produto = $model->findOrFail($produtoID);
                
         //Validação
@@ -81,11 +81,11 @@ class EstoqueFarmacia extends ApiController {
 
     /**
      * Exclui um produto
-     * @param $tipo = remedio ou produto
+     * @param $tipo = remedios ou materiais
     */
      public function excluir(Request $request, string $tipo, int $produtoID) {
         //Seleciona o Model
-        $model = ($tipo == 'remedio' ? FarmaciaRemedio::query() : FarmaciaMaterial::query());
+        $model = ($tipo == 'remedios' ? FarmaciaRemedio::query() : FarmaciaMaterial::query());
        
         $produto = $model->findOrFail($produtoID);
         $produto->delete();

@@ -17,10 +17,10 @@ class CreateFarmaciaRemediosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->integer('forma_farmaceutica')->comment('1 - Liquido |2 -  Comprimido | 3 - Capsula | 4 -  Pomada | 5 -  Injetável');
-            $table->string('dosagem');
-            $table->date('validade');
-            $table->integer('quantidade');
-            $table->integer('saida');
+            $table->string('dosagem')->nullable();
+            $table->date('validade')->nullable();
+            $table->integer('quantidade')->nullable();
+            $table->integer('saida')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
