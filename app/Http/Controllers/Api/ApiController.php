@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Usuario;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class ApiController extends Controller {
 
@@ -17,7 +18,7 @@ class ApiController extends Controller {
      * @return int | id do usuário no JWT
      */
     protected function getUsuarioID(Request $request):int {
-        $dados = JWT::decode($request->header('Authorization'), config('jwt.senha'), ['HS256']);
+        $dados = JWT::decode($request->header('Authorization'), new Key(config('jwt.senha'), 'HS256'));
         return $dados->id;
     }
 

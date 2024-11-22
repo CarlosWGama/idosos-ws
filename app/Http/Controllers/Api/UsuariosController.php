@@ -21,7 +21,7 @@ class UsuariosController extends ApiController {
                             ->where('deletado', false)
                             ->firstOrFail(); //Senão achar retorna 404
 
-        $jwt = JWT::encode(['id' => $usuario->id], config('jwt.senha'));
+        $jwt = JWT::encode(['id' => $usuario->id], config('jwt.senha'), 'HS256');
         return response()->json(['jwt' => $jwt, 'usuario' => $usuario], 200);
     }
 

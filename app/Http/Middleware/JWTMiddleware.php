@@ -19,9 +19,8 @@ class JWTMiddleware {
      */
     public function handle($request, Closure $next) {
         try {
-            $jwt = $request->bearerToken();
+            $jwt = $request->header('Authorization');
             $dados = JWT::decode($jwt,new Key(config('jwt.senha'), 'HS256'));
-            
             return $next($request);
         } catch (\Exception $e) { 
             //Adicionar \ antes no Exception, porque estamos no namespace App\Http\Middleware
