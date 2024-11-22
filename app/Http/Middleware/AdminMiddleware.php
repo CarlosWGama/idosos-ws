@@ -3,21 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
-class AdminMiddleware
-{
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next) {
-
-        if ($request->session()->has('usuario') && session('usuario')->admin)
+class AdminMiddleware {
+   
+    public function handle(Request $request, Closure $next)
+    {
+        if (session('usuario'))
             return $next($request);
-        else 
-            return redirect()->route('login')->with('erro', 'Sessão expirada');
+        return redirect('login')->with('erro', 'Necessário estar autenticado');
     }
 }

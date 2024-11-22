@@ -233,7 +233,7 @@
     @stack('javascript')
 
     @if(isset($tinymce))
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/o3fcbcrdrs1nq3j489qbzc1tfcy55toyx7g59a6xydqrsu6o/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
     tinymce.init({
         selector: 'textarea.tinymce',  // change this value according to your HTML

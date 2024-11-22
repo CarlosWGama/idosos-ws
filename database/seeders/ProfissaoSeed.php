@@ -1,7 +1,9 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Profissao;
+
 
 class ProfissaoSeed extends Seeder
 {

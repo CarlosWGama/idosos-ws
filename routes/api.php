@@ -1,6 +1,19 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\UsuariosController;
+use App\Http\Controllers\Api\CasaDoPobreController;
+use App\Http\Controllers\Api\NotificacaoController;
+use App\Http\Controllers\Api\PacientesController;
+use App\Http\Controllers\Api\EstoqueFarmacia;
+use App\Http\Controllers\Api\ProntuarioNutricaoController;
+use App\Http\Controllers\Api\ProntuarioOdontologiaController;
+use App\Http\Controllers\Api\ProntuarioFisioterapiaController;
+use App\Http\Controllers\Api\ProntuarioEducacaoFisicaController;
+use App\Http\Controllers\Api\ProntuarioEnfermagemController;
+use App\Http\Controllers\Api\MedicamentosController;
+use App\Http\Controllers\Api\ExamesLaboratoriaisController;
+use App\Models\Notificacao;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,159 +26,159 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('/usuarios', 'Api\UsuariosController@registrar');
-Route::post('/login', 'Api\UsuariosController@logar');
+Route::post('/usuarios', [UsuariosController::class, 'registar']);
+Route::post('/login', [UsuariosController::class, 'logar']);
 
 
-Route::group(['prefix' => 'casa'], function () {
-    Route::get('historico', 'Api\CasaDoPobreController@historico');
-    Route::get('fotos', 'Api\CasaDoPobreController@fotos');
-    Route::get('agenda', 'Api\CasaDoPobreController@agenda');
-    Route::get('contatos', 'Api\CasaDoPobreController@contatos');
-    Route::get('equipe', 'Api\CasaDoPobreController@equipe');
+Route::controller(CasaDoPobreController::class)->prefix('casa')->group(function () {
+    Route::get('historico', 'historico');
+    Route::get('fotos', 'fotos');
+    Route::get('agenda', 'agenda');
+    Route::get('contatos', 'contatos');
+    Route::get('equipe', 'equipe');
 });
 
-Route::group(['middleware' => ['jwt']], function () {   
+Route::controller(NotificacaoController::class)->middleware('jwt')->group(function () {   
 
     //Casa do Pobre
-    Route::group(['prefix' => 'casa'], function () {
-        Route::post('agenda', 'Api\CasaDoPobreController@cadastrarEvento');
-        Route::delete('agenda/{id}', 'Api\CasaDoPobreController@excluirEvento');
+    Route::controller(CasaDoPobreController::class)->prefix('casa')->group(function () {
+        Route::post('agenda', 'cadastrarEvento');
+        Route::delete('agenda/{id}', 'excluirEvento');
     });
 
     //Usuarios
-    Route::group(['prefix' => 'usuarios'], function () {
-        Route::post('/alunos', 'Api\UsuariosController@cadastrarAluno');
-        Route::get('/alunos', 'Api\UsuariosController@buscarAlunos');
-        Route::put('/alunos/{id}', 'Api\UsuariosController@atualizarAluno');
-        Route::delete('/alunos/{id}', 'Api\UsuariosController@excluirAluno');
+    Route::controller(UsuariosController::class)->prefix('usuarios')->group(function () {
+        Route::post('/alunos', 'cadastrarAluno');
+        Route::get('/alunos', 'buscarAlunos');
+        Route::put('/alunos/{id}', 'atualizarAluno');
+        Route::delete('/alunos/{id}', 'excluirAluno');
     });
     
     //Notificações
-    Route::group(['prefix' => 'notificacoes'], function () {
-        Route::post('/', 'Api\NotificacaoController@cadastrar');
-        Route::get('/', 'Api\NotificacaoController@buscarTodas');
-        Route::get('/nao-lidas', 'Api\NotificacaoController@totalNaoLidas');
-        Route::put('/{id}', 'Api\NotificacaoController@ler');
-        Route::delete('/{id}', 'Api\NotificacaoController@excluir');
+    Route::controller(NotificacaoController::class)->prefix('notificacoes')->group(function () {
+        Route::post('/', 'cadastrar');
+        Route::get('/', 'buscarTodas');
+        Route::get('/nao-lidas', 'totalNaoLidas');
+        Route::put('/{id}', 'ler');
+        Route::delete('/{id}', 'excluir');
     });
 
     //Pacientes
-    Route::group(['prefix' => 'pacientes'], function () {
-        Route::post('', 'Api\PacientesController@cadastrar');
-        Route::put('/{id}', 'Api\PacientesController@atualizar');
-        Route::get('{genero?}', 'Api\PacientesController@buscarTodos');
-        Route::put('/dados-clinicos/{id}', 'Api\PacientesController@atualizarDadosClinicos');
-        Route::get('/dados-clinicos/{id}', 'Api\PacientesController@dadosClinicos');
+    Route::controller(PacientesController::class)->prefix('pacientes')->group(function () {
+        Route::post('', 'cadastrar');
+        Route::put('/{id}', 'atualizar');
+        Route::get('{genero?}', 'buscarTodos');
+        Route::put('/dados-clinicos/{id}', 'atualizarDadosClinicos');
+        Route::get('/dados-clinicos/{id}', 'dadosClinicos');
     });
 
     //Estoque
-    Route::group(['prefix' => 'estoque'], function () {
-        Route::get('/{tipo}/{inicio?}/{limite?}', 'Api\EstoqueFarmacia@buscar');
-        Route::post('/{tipo}', 'Api\EstoqueFarmacia@cadastrar');
-        Route::put('/{tipo}/{id}', 'Api\EstoqueFarmacia@atualizar');
-        Route::delete('/{tipo}/{id}', 'Api\EstoqueFarmacia@excluir');
+    Route::controller(EstoqueFarmacia::class)->prefix('estoque')->group(function () {
+        Route::get('/{tipo}/{inicio?}/{limite?}', 'buscar');
+        Route::post('/{tipo}', 'cadastrar');
+        Route::put('/{tipo}/{id}', 'atualizar');
+        Route::delete('/{tipo}/{id}', 'excluir');
     });
 
     //Prontuarios
-    Route::group(['prefix' => 'prontuarios'], function () {
+    Route::prefix('prontuarios')->group(function () {
         
         //Nutrição
-        Route::group(['prefix' => 'nutricao'], function () {
+        Route::controller(ProntuarioNutricaoController::class)->prefix('nutricao')->group(function () {
             //Ficha
-            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioNutricaoController@buscarFicha');
-            Route::put('/ficha', 'Api\ProntuarioNutricaoController@salvarFicha');
+            Route::get('/ficha/{pacienteID}', 'buscarFicha');
+            Route::put('/ficha', 'salvarFicha');
             
             //Evoluções
-            Route::post('/evolucao', 'Api\ProntuarioNutricaoController@cadastrarEvolucao');
-            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioNutricaoController@aprovarEvolucao');
-            Route::put('/evolucao/{id}', 'Api\ProntuarioNutricaoController@atualizarEvolucao');
-            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioNutricaoController@buscarEvolucoes');
+            Route::post('/evolucao', 'cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarEvolucoes');
         });
 
         //Odontologia
-        Route::group(['prefix' => 'odontologia'], function () {
+        Route::controller(ProntuarioOdontologiaController::class)->prefix('odontologia')->group(function () {
             //Ficha
-            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioOdontologiaController@buscarFicha');
-            Route::put('/ficha', 'Api\ProntuarioOdontologiaController@salvarFicha');
+            Route::get('/ficha/{pacienteID}', 'buscarFicha');
+            Route::put('/ficha', 'salvarFicha');
             
             //Evoluções
-            Route::post('/evolucao', 'Api\ProntuarioOdontologiaController@cadastrarEvolucao');
-            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioOdontologiaController@aprovarEvolucao');
-            Route::put('/evolucao/{id}', 'Api\ProntuarioOdontologiaController@atualizarEvolucao');
-            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioOdontologiaController@buscarEvolucoes');
+            Route::post('/evolucao', 'cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarEvolucoes');
         });
 
         //Fisioterapia
-         Route::group(['prefix' => 'fisioterapia'], function () {
+         Route::controller(ProntuarioFisioterapiaController::class)->prefix('fisioterapia')->group(function () {
             //Ficha
-            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioFisioterapiaController@buscarFicha');
-            Route::put('/ficha', 'Api\ProntuarioFisioterapiaController@salvarFicha');
+            Route::get('/ficha/{pacienteID}', 'buscarFicha');
+            Route::put('/ficha', 'salvarFicha');
             
             //Evoluções
-            Route::post('/evolucao', 'Api\ProntuarioFisioterapiaController@cadastrarEvolucao');
-            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioFisioterapiaController@aprovarEvolucao');
-            Route::put('/evolucao/{id}', 'Api\ProntuarioFisioterapiaController@atualizarEvolucao');
-            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioFisioterapiaController@buscarEvolucoes');
+            Route::post('/evolucao', 'cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarEvolucoes');
         });
 
          //Educação Física
-         Route::group(['prefix' => 'educacao-fisica'], function () {
+         Route::controller(ProntuarioEducacaoFisicaController::class)->prefix('educacao-fisica')->group(function () {
             //Ficha
-            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioEducacaoFisicaController@buscarFicha');
-            Route::put('/ficha', 'Api\ProntuarioEducacaoFisicaController@salvarFicha');
+            Route::get('/ficha/{pacienteID}', 'buscarFicha');
+            Route::put('/ficha', 'salvarFicha');
             
             //Evoluções
-            Route::post('/evolucao', 'Api\ProntuarioEducacaoFisicaController@cadastrarEvolucao');
-            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioEducacaoFisicaController@aprovarEvolucao');
-            Route::put('/evolucao/{id}', 'Api\ProntuarioEducacaoFisicaController@atualizarEvolucao');
-            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEducacaoFisicaController@buscarEvolucoes');
+            Route::post('/evolucao', 'cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarEvolucoes');
 
             //Teste de Acompanhamento
-            Route::post('/acompanhamentos', 'Api\ProntuarioEducacaoFisicaController@cadastrarAcompanhamento');
-            Route::put('/acompanhamentos/aprovacao/{id}', 'Api\ProntuarioEducacaoFisicaController@aprovarAcompanhamento');
-            Route::put('/acompanhamentos/{id}', 'Api\ProntuarioEducacaoFisicaController@atualizarAcompanhamento');
-            Route::get('/acompanhamentos/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEducacaoFisicaController@buscarAcompanhamentos');
+            Route::post('/acompanhamentos', 'cadastrarAcompanhamento');
+            Route::put('/acompanhamentos/aprovacao/{id}', 'aprovarAcompanhamento');
+            Route::put('/acompanhamentos/{id}', 'atualizarAcompanhamento');
+            Route::get('/acompanhamentos/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarAcompanhamentos');
         });
 
           //Educação Física
-          Route::group(['prefix' => 'enfermagem'], function () {
+          Route::controller(ProntuarioEnfermagemController::class)->prefix('enfermagem')->group(function () {
             //Ficha
-            Route::get('/ficha/{pacienteID}', 'Api\ProntuarioEnfermagemController@buscarFicha');
-            Route::put('/ficha', 'Api\ProntuarioEnfermagemController@salvarFicha');
+            Route::get('/ficha/{pacienteID}', 'buscarFicha');
+            Route::put('/ficha', 'salvarFicha');
             
             //Evoluções
-            Route::post('/evolucao', 'Api\ProntuarioEnfermagemController@cadastrarEvolucao');
-            Route::put('/evolucao/aprovacao/{id}', 'Api\ProntuarioEnfermagemController@aprovarEvolucao');
-            Route::put('/evolucao/{id}', 'Api\ProntuarioEnfermagemController@atualizarEvolucao');
-            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEnfermagemController@buscarEvolucoes');
+            Route::post('/evolucao', 'cadastrarEvolucao');
+            Route::put('/evolucao/aprovacao/{id}', 'aprovarEvolucao');
+            Route::put('/evolucao/{id}', 'atualizarEvolucao');
+            Route::get('/evolucao/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarEvolucoes');
 
             //Teste de Consulta Clinica
-            Route::post('/consulta-clinica', 'Api\ProntuarioEnfermagemController@cadastrarConsultaClinica');
-            Route::put('/consulta-clinica/aprovacao/{id}', 'Api\ProntuarioEnfermagemController@aprovarConsultaClinica');
-            Route::put('/consulta-clinica/{id}', 'Api\ProntuarioEnfermagemController@atualizarConsultaClinica');
-            Route::get('/consulta-clinica/{pacienteID}/{id}/{inicio?}/{limite?}', 'Api\ProntuarioEnfermagemController@buscarConsultasClinicas');
+            Route::post('/consulta-clinica', 'cadastrarConsultaClinica');
+            Route::put('/consulta-clinica/aprovacao/{id}', 'aprovarConsultaClinica');
+            Route::put('/consulta-clinica/{id}', 'atualizarConsultaClinica');
+            Route::get('/consulta-clinica/{pacienteID}/{id}/{inicio?}/{limite?}', 'buscarConsultasClinicas');
         });
     });
 
     //Medicamentos
-    Route::group(['prefix' => 'medicamentos'], function () {
+    Route::controller(MedicamentosController::class)->prefix('medicamentos')->group(function () {
 
-            Route::get('/ativo/{pacienteID}/{areaID?}', 'Api\MedicamentosController@ativos');
-            Route::get('/inativo/{pacienteID}/{areaID?}', 'Api\MedicamentosController@inativos');
-            Route::post('', 'Api\MedicamentosController@cadastrar');
-            Route::put('/ativacao/{id}/{ativo}', 'Api\MedicamentosController@ativacao');
-            Route::put('/{id}', 'Api\MedicamentosController@atualizar');
-            Route::delete('/{id}', 'Api\MedicamentosController@excluir');
+            Route::get('/ativo/{pacienteID}/{areaID?}', 'ativos');
+            Route::get('/inativo/{pacienteID}/{areaID?}', 'inativos');
+            Route::post('', 'cadastrar');
+            Route::put('/ativacao/{id}/{ativo}', 'ativacao');
+            Route::put('/{id}', 'atualizar');
+            Route::delete('/{id}', 'excluir');
         
     });
     
     //Exames Laboratoriais
-    Route::group(['prefix' => 'exames-laboratoriais'], function () {
-            Route::get('/{pacienteID}', 'Api\ExamesLaboratoriaisController@buscar');
-            Route::post('', 'Api\ExamesLaboratoriaisController@cadastrar');
-            Route::put('/{id}', 'Api\ExamesLaboratoriaisController@atualizar');
-            Route::delete('/{id}', 'Api\ExamesLaboratoriaisController@excluir');
+    Route::controller(ExamesLaboratoriaisController::class)->prefix('exames-laboratoriais')->group(function () {
+            Route::get('/{pacienteID}', 'buscar');
+            Route::post('', 'cadastrar');
+            Route::put('/{id}', 'atualizar');
+            Route::delete('/{id}', 'excluir');
     });
 
 });
